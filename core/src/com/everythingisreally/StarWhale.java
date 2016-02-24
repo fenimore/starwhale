@@ -8,6 +8,7 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
@@ -32,7 +33,26 @@ public class StarWhale extends ApplicationAdapter {
 	private Rectangle whale;
 	private Array<Rectangle> smallStars;
 	private Array<Rectangle> bigStars;
+
+	// Itervals for Star spawn and Drain health
+	private long lastBigStarTime;
+	private long lastDrainTime;
 	private long lastStarTime;
+
+	// Whale Movement
+	private int RIGHT = 0;
+	private int LEFT = 1;
+	private int whaleDirection = 0; //lets say 0 is right?
+	private float x_start = 800 / 2 - 32 / 2; // x origin
+	private float y_start = 70; // y origin
+	private float w_start = 16; // width
+	private float h_start = 32; // height
+
+	// Health and Score
+	private String starScore;
+	BitmapFont scoreBitmap;
+	private String whaleHealth;
+	BitmapFont healthBitmap;
 
 
 
@@ -56,11 +76,14 @@ public class StarWhale extends ApplicationAdapter {
 		batch = new SpriteBatch();
 
 		// create a Rectangle to logically represent the bucket
+		// Replace by Whale Class extending Rectangle
 		whale = new Rectangle();
-		whale.x = 800 / 2 - 64 / 2; // center the bucket horizontally
-		whale.y = 20; // bottom left corner of the bucket is 20 pixels above the bottom screen edge
-		whale.width = 64;
-		whale.height = 64;
+		whale.x = 800 / 2 - 32 / 2; // center the whale horizontally
+		whale.y = 20; // bottom left corner of the whale is 20 pixels above the bottom screen edge
+		whale.width = w_start;
+		whale.height = h_start;
+
+
 
 		// create the raindrops array and spawn the first raindrop
 		smallStars = new Array<Rectangle>();
@@ -72,8 +95,8 @@ public class StarWhale extends ApplicationAdapter {
 		Rectangle smallStar = new Rectangle();
 		smallStar.x = MathUtils.random(0, 800 - 64);
 		smallStar.y = 480;
-		smallStar.width = 64;
-		smallStar.height = 64;
+		smallStar.width = 19;
+		smallStar.height = 19;
 		smallStars.add(smallStar);
 		lastStarTime = TimeUtils.nanoTime();
 	}
@@ -104,18 +127,22 @@ public class StarWhale extends ApplicationAdapter {
 		batch.end();
 
 		// process user input
-		if(Gdx.input.isTouched()) {
-			Vector3 touchPos = new Vector3();
-			touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
-			camera.unproject(touchPos);
-			whale.x = touchPos.x - 64 / 2;
+		// INPUT must be JUST touched, else its buggy
+		if(Gdx.input.justTouched()) {
+			if(whaleDirection == RIGHT) {
+				whaleDirection = LEFT;
+			} else if(whaleDirection == LEFT) {
+				whaleDirection = RIGHT;
+			}
 		}
-		if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) whale.x -= 200 * Gdx.graphics.getDeltaTime();
-		if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) whale.x += 200 * Gdx.graphics.getDeltaTime();
+
+		// The movements!
+		if(whaleDirection == RIGHT) whale.x -= 250 * Gdx.graphics.getDeltaTime();
+		if(whaleDirection == LEFT) whale.x += 250 * Gdx.graphics.getDeltaTime();
 
 		// make sure the whale stays within the screen bounds
 		if(whale.x < 0) whale.x = 0;
-		if(whale.x > 480 - 64) whale.x = 800 - 64;
+		if(whale.x > 800 - 32) whale.x = 800 - 32;
 
 		// check if we need to create a new star
 		if(TimeUtils.nanoTime() - lastStarTime > 1000000000) spawnStar();
