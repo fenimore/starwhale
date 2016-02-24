@@ -15,4 +15,6 @@ public class AndroidLauncher extends AndroidApplication {
 		config.useCompass = false;
 		initialize(new StarWhale(), config);
 	}
+
+	// add TOAST override?
 }

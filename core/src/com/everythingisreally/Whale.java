@@ -54,7 +54,6 @@ public class Whale extends Rectangle {
             whaleImage.dispose();
             Health = 0;
             // Game Over?
-            //Toast toast = Toast.makeText(context, text, duration);
             //toast.show();
 
         } else Health -= .2; // TODO: Find the sweet Spot

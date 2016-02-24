@@ -150,10 +150,10 @@ public class StarWhale extends ApplicationAdapter {
 		batch.begin();
 		// Score
 		scoreBitmap.setColor(1.0f, 1.0f, 1.0f, 1.0f);
-		scoreBitmap.draw(batch, starScore, 25, 100);
+		scoreBitmap.draw(batch, starScore, 25, 1000);
 		// Health
 		healthBitmap.setColor(1.0f, 1.0f, 1.0f, 1.0f);
-		healthBitmap.draw(batch, whaleHealth, 25, 130);
+		healthBitmap.draw(batch, whaleHealth, 25, 1030); // TODO: Draw bar for health
 		// Whale - GET THE appropriate Whale Sprie
 		batch.draw(whale.getWhaleImage(), whale.x, whale.y);
 		// Stars
