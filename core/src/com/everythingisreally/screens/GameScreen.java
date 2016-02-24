@@ -1,6 +1,5 @@
-package com.everythingisreally;
+package com.everythingisreally.screens;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
@@ -14,6 +13,8 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
+import com.everythingisreally.StarWhale;
+import com.everythingisreally.objects.Whale;
 
 import java.util.Iterator;
 

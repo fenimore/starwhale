@@ -4,9 +4,7 @@ package com.everythingisreally;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-
-
-import java.util.Iterator;
+import com.everythingisreally.screens.MainMenuScreen;
 
 //TODO: FIND SWEET SPOT
 // FOR: health drain and star generation and whale speed
