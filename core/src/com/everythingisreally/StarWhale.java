@@ -16,6 +16,8 @@ public class StarWhale extends Game {
 	public SpriteBatch batch;
 	public BitmapFont font;
 
+	public boolean backpressed=false;
+
 	public void create() {
 		batch = new SpriteBatch();
 		//Use LibGDX's default Arial font.

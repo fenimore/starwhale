@@ -1,6 +1,8 @@
 package com.everythingisreally;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
@@ -59,6 +61,7 @@ public class GameScreen implements Screen {
     BitmapFont scoreBitmap;
     private String whaleHealth;
     BitmapFont healthBitmap;
+    private boolean alive;
 
 
     public GameScreen(final StarWhale gam) {
@@ -69,6 +72,7 @@ public class GameScreen implements Screen {
         scoreBitmap = new BitmapFont();
         whaleHealth = "Health: 100";
         healthBitmap = new BitmapFont();
+        alive = true;
 
         //Star Textures
         smallStarImage = new Texture(Gdx.files.internal("small_star.png"));
@@ -142,12 +146,19 @@ public class GameScreen implements Screen {
         // tell the camera to update its matrices.
         camera.update();
 
+        if (Gdx.input.isKeyPressed(Input.Keys.BACK)){
+            game.setScreen(new MainMenuScreen(game));
+            dispose();
+        }
+
         // Check Whale size
         whale.refreshWhale();
         // Update stats
         whaleHealth = "Health " + whale.getHealth();
         starScore = "Score: " + whale.getScore();
-
+        if (whale.getHealth() <= 0) {
+            alive = false;
+        }
         // Drain Health at interval
         if(TimeUtils.nanoTime() - lastDrainTime > 100500000){
             whale.drainHealth();
@@ -161,6 +172,10 @@ public class GameScreen implements Screen {
         // begin a new batch and draw the whale and
         // all stars and the Score and Health
         batch.begin();
+        
+        if (!alive){
+            scoreBitmap.draw(batch, "You've Died", 85, 400);
+        }
         // Score
         scoreBitmap.setColor(1.0f, 1.0f, 1.0f, 1.0f);
         scoreBitmap.draw(batch, starScore, 25, 1000);
