@@ -2,8 +2,6 @@ package com.everythingisreally;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -12,25 +10,25 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
 
 import java.util.Iterator;
 
+//TODO: Create Star Class
 public class StarWhale extends ApplicationAdapter {
+
 	private Texture smallStarImage;
 	private Texture bigStarImage;
 	private Texture whaleImage;
 	private Sound plopSound;
-
 
 	// Set Up the Camera and Sprite Batch so that image scales
 	private OrthographicCamera camera;
 	private SpriteBatch batch;
 
 	// The Programmable Shapes
-	private Rectangle whale;
+	private Whale whale;
 	private Array<Rectangle> smallStars;
 	private Array<Rectangle> bigStars;
 
@@ -58,6 +56,12 @@ public class StarWhale extends ApplicationAdapter {
 
 	@Override
 	public void create () {
+		//Health and Score Initial to 100 and 0
+		starScore = "score: 0";
+		scoreBitmap = new BitmapFont();
+		whaleHealth = "Health: 100";
+		healthBitmap = new BitmapFont();
+
 		//Star Textures
 		smallStarImage = new Texture(Gdx.files.internal("small_star.png"));
 		bigStarImage = new Texture(Gdx.files.internal("big_star.png"));
@@ -77,21 +81,23 @@ public class StarWhale extends ApplicationAdapter {
 
 		// create the Whale, extending Rectangle
 		whale = new Whale(x_start, y_start, w_start, h_start, whaleImage);
-		// create a Rectangle to logically represent the bucket
-		// Replace by Whale Class extending Rectangle
-		//whale = new Rectangle();
-		//whale.x = 800 / 2 - 32 / 2; // center the whale horizontally
-		//whale.y = 20; // bottom left corner of the whale is 20 pixels above the bottom screen edge
-		//whale.width = w_start;
-		//whale.height = h_start;
 
 		// create the raindrops array and spawn the first raindrop
 		smallStars = new Array<Rectangle>();
-		spawnStar();
+		bigStars = new Array<Rectangle>();
+		spawnSmallStar();
+		//spawnBigStar();
+
+		// Start draining health,
+		whale.drainHealth();
+		lastDrainTime = TimeUtils.nanoTime();
 
 	}
 
-	private void spawnStar() {
+	private void spawnBigStar() {
+	}
+
+	private void spawnSmallStar() {
 		Rectangle smallStar = new Rectangle();
 		smallStar.x = MathUtils.random(0, 800 - 64);
 		smallStar.y = 480;
@@ -107,22 +113,40 @@ public class StarWhale extends ApplicationAdapter {
 		// arguments to glClearColor are the red, green
 		// blue and alpha component in the range [0,1]
 		// of the color to be used to clear the screen.
+		// TODO: Make Pretty
 		Gdx.gl.glClearColor(0, 0, 0.2f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		// tell the camera to update its matrices.
 		camera.update();
 
+		// Check Whale size
+		//whale.refreshWhale();
+		// Update stats
+		whaleHealth = "Health " + whale.getHealth();
+		starScore = "Score: " + whale.getScore();
+
 		// tell the SpriteBatch to render in the
 		// coordinate system specified by the camera.
 		batch.setProjectionMatrix(camera.combined);
 
 		// begin a new batch and draw the whale and
-		// all stars
+		// all stars and the Score and Health
 		batch.begin();
+		// Score
+		scoreBitmap.setColor(1.0f, 1.0f, 1.0f, 1.0f);
+		scoreBitmap.draw(batch, starScore, 25, 100);
+		// Health
+		healthBitmap.setColor(1.0f, 1.0f, 1.0f, 1.0f);
+		healthBitmap.draw(batch, whaleHealth, 25, 130);
+		// Whale
 		batch.draw(whaleImage, whale.x, whale.y);
+		// Stars
 		for(Rectangle smallStar: smallStars) {
 			batch.draw(smallStarImage, smallStar.x, smallStar.y);
+		}
+		for(Rectangle bigStar: bigStars) {
+			batch.draw(bigStarImage, bigStar.x, bigStar.y);
 		}
 		batch.end();
 
@@ -145,7 +169,7 @@ public class StarWhale extends ApplicationAdapter {
 		if(whale.x > 800 - 32) whale.x = 800 - 32;
 
 		// check if we need to create a new star
-		if(TimeUtils.nanoTime() - lastStarTime > 1000000000) spawnStar();
+		if(TimeUtils.nanoTime() - lastStarTime > 1000000000) spawnSmallStar();
 
 		// move the stars, remove any that are beneath the bottom edge of
 		// the screen or that hit the bucket. In the later case we play back
