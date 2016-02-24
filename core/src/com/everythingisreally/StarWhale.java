@@ -15,7 +15,8 @@ import com.badlogic.gdx.utils.TimeUtils;
 
 import java.util.Iterator;
 
-//TODO: Create Star Class
+//TODO: FIND SWEET SPOT
+// FOR: health drain and star generation and whale speed
 public class StarWhale extends ApplicationAdapter {
 
 	private Texture smallStarImage;
@@ -94,9 +95,6 @@ public class StarWhale extends ApplicationAdapter {
 
 	}
 
-	private void spawnBigStar() {
-	}
-
 	private void spawnSmallStar() {
 		Rectangle smallStar = new Rectangle();
 		smallStar.x = MathUtils.random(0, 800 - 64);
@@ -105,6 +103,16 @@ public class StarWhale extends ApplicationAdapter {
 		smallStar.height = 19;
 		smallStars.add(smallStar);
 		lastStarTime = TimeUtils.nanoTime();
+	}
+
+	private void spawnBigStar() {
+		Rectangle bigStar = new Rectangle();
+		bigStar.x = MathUtils.random(0, 800 - 64);
+		bigStar.y = 1150;
+		bigStar.width = 29;
+		bigStar.height = 29;
+		bigStars.add(bigStar);
+		lastBigStarTime = TimeUtils.nanoTime();
 	}
 
 	@Override
@@ -174,10 +182,11 @@ public class StarWhale extends ApplicationAdapter {
 		if(whale.x < 0) whale.x = 0;
 		if(whale.x > 800 - 32) whale.x = 800 - 32;
 
-		// check if we need to create a new star
-		if(TimeUtils.nanoTime() - lastStarTime > 1000000000) spawnSmallStar();
+		// check if we need to create a new star TODO: Find sweet Spot
+		if(TimeUtils.nanoTime() - lastStarTime > 99919990) spawnSmallStar();
 
-		// The Spawning from Array?
+
+		// Falling Stars, and Collision Checking
 		// Remove below screen and add health/score when collision
 		Iterator<Rectangle> iter = smallStars.iterator();
 		// the SMALL star updater
