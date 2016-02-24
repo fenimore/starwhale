@@ -152,7 +152,9 @@ public class GameScreen implements Screen {
         }
 
         // Check Whale size
-        whale.refreshWhale();
+        if(alive) {
+            whale.refreshWhale();
+        }
         // Update stats
         whaleHealth = "Health " + whale.getHealth();
         starScore = "Score: " + whale.getScore();
@@ -172,9 +174,13 @@ public class GameScreen implements Screen {
         // begin a new batch and draw the whale and
         // all stars and the Score and Health
         batch.begin();
-        
+
         if (!alive){
+            whaleImage.dispose();
             scoreBitmap.draw(batch, "You've Died", 85, 400);
+        } else if (alive) {
+            batch.draw(whale.getWhaleImage(), whale.x, whale.y);
+            whale.perish(); // DIE!
         }
         // Score
         scoreBitmap.setColor(1.0f, 1.0f, 1.0f, 1.0f);
@@ -183,7 +189,7 @@ public class GameScreen implements Screen {
         healthBitmap.setColor(1.0f, 1.0f, 1.0f, 1.0f);
         healthBitmap.draw(batch, whaleHealth, 25, 1030); // TODO: Draw bar for health
         // Whale - GET THE appropriate Whale Sprie
-        batch.draw(whale.getWhaleImage(), whale.x, whale.y);
+
         // Stars
         for(Rectangle smallStar: smallStars) {
             batch.draw(smallStarImage, smallStar.x, smallStar.y);
@@ -234,7 +240,7 @@ public class GameScreen implements Screen {
             Rectangle smallStar = smallStarIter.next();
             smallStar.y -= 250 * Gdx.graphics.getDeltaTime();
             if(smallStar.y + 19 < 0) smallStarIter.remove();
-            if(smallStar.overlaps(whale)) {
+            if(smallStar.overlaps(whale) && alive) {
                 plopSound.play();
                 smallStarIter.remove();
                 whale.addScore(1);
@@ -247,7 +253,7 @@ public class GameScreen implements Screen {
             Rectangle bigstar =  bigStarIter.next();
             bigstar.y -= 250 * Gdx.graphics.getDeltaTime();
             if(bigstar.y + 29 < 0) bigStarIter.remove();
-            if(bigstar.overlaps(whale)) {
+            if(bigstar.overlaps(whale) && alive) {
                 plopSound.play();
                 bigStarIter.remove();
                 whale.addScore(5);

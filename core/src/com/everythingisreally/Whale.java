@@ -51,7 +51,7 @@ public class Whale extends Rectangle {
 
     public void drainHealth(){
         if((Health -= .2) <= 0){
-            whaleImage.dispose();
+            //whaleImage.dispose();
             Health = 0;
             // Game Over?
             //toast.show();
@@ -95,6 +95,12 @@ public class Whale extends Rectangle {
             this.setWidth(((float) whale_w_4));
         }
         // RIGHT now, 200 is the top level...
+    }
+
+    public void perish(){
+        // die of hunger
+        this.setWidth(0);
+        this.setHeight(0);
     }
 
 }
