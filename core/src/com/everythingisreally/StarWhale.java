@@ -74,7 +74,7 @@ public class StarWhale extends ApplicationAdapter {
 
 		// Scale Textures ETC to same size
 		camera = new OrthographicCamera();
-		camera.setToOrtho(false, 800, 480);
+		camera.setToOrtho(false, 800, 1150);
 
 		// Sprite Batch
 		batch = new SpriteBatch();
@@ -100,7 +100,7 @@ public class StarWhale extends ApplicationAdapter {
 	private void spawnSmallStar() {
 		Rectangle smallStar = new Rectangle();
 		smallStar.x = MathUtils.random(0, 800 - 64);
-		smallStar.y = 480;
+		smallStar.y = 1150;
 		smallStar.width = 19;
 		smallStar.height = 19;
 		smallStars.add(smallStar);
