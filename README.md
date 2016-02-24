@@ -2,11 +2,12 @@
 
 ## TODO:
 - Find sweet spots
-- for drain
-- for star generation
+	- for drain
+	- for star generation
 - Music
 - Make Pretty
-- Sprite change should be more elegant
+	- Sprite change should be more elegant
+	- Fonts, yo
 - Difficult is n'importe qoui
 - Too ugly
 
