@@ -17,6 +17,7 @@ import java.util.Iterator;
 
 //TODO: FIND SWEET SPOT
 // FOR: health drain and star generation and whale speed
+// TODO: Create STAR class
 public class StarWhale extends ApplicationAdapter {
 
 	private Texture smallStarImage;
@@ -87,7 +88,7 @@ public class StarWhale extends ApplicationAdapter {
 		smallStars = new Array<Rectangle>();
 		bigStars = new Array<Rectangle>();
 		spawnSmallStar();
-		//spawnBigStar();
+		spawnBigStar();
 
 		// Start draining health,
 		whale.drainHealth();
@@ -129,7 +130,7 @@ public class StarWhale extends ApplicationAdapter {
 		camera.update();
 
 		// Check Whale size
-		//whale.refreshWhale();
+		whale.refreshWhale();
 		// Update stats
 		whaleHealth = "Health " + whale.getHealth();
 		starScore = "Score: " + whale.getScore();
@@ -153,8 +154,8 @@ public class StarWhale extends ApplicationAdapter {
 		// Health
 		healthBitmap.setColor(1.0f, 1.0f, 1.0f, 1.0f);
 		healthBitmap.draw(batch, whaleHealth, 25, 130);
-		// Whale
-		batch.draw(whaleImage, whale.x, whale.y);
+		// Whale - GET THE appropriate Whale Sprie
+		batch.draw(whale.getWhaleImage(), whale.x, whale.y);
 		// Stars
 		for(Rectangle smallStar: smallStars) {
 			batch.draw(smallStarImage, smallStar.x, smallStar.y);
@@ -184,21 +185,45 @@ public class StarWhale extends ApplicationAdapter {
 
 		// check if we need to create a new star TODO: Find sweet Spot
 		if(TimeUtils.nanoTime() - lastStarTime > 99919990) spawnSmallStar();
-
+		// Spawn new big star at interval
+		// THIS IS MOSTLY BROKEN TODO: Make this work better...
+		if(TimeUtils.nanoTime() - lastBigStarTime > 1999999990){
+			// flip a coin
+			int toss = MathUtils.random(0, 1000);
+			if(toss == 0){
+				spawnBigStar();
+			}else {
+				lastBigStarTime = TimeUtils.nanoTime();
+			}
+			spawnBigStar();
+		}
 
 		// Falling Stars, and Collision Checking
 		// Remove below screen and add health/score when collision
-		Iterator<Rectangle> iter = smallStars.iterator();
+		Iterator<Rectangle> smallStarIter = smallStars.iterator();
 		// the SMALL star updater
-		while(iter.hasNext()){
-			Rectangle smallStar = iter.next();
+		while(smallStarIter.hasNext()){
+			Rectangle smallStar = smallStarIter.next();
 			smallStar.y -= 250 * Gdx.graphics.getDeltaTime();
-			if(smallStar.y + 19 < 0) iter.remove();
+			if(smallStar.y + 19 < 0) smallStarIter.remove();
 			if(smallStar.overlaps(whale)) {
 				plopSound.play();
-				iter.remove();
+				smallStarIter.remove();
 				whale.addScore(1);
 				whale.addHealth(1);
+			}
+		}
+		Iterator<Rectangle> bigStarIter = bigStars.iterator();
+		// the BIG star updater
+		while(bigStarIter.hasNext()){
+			Rectangle bigstar =  bigStarIter.next();
+			bigstar.y -= 250 * Gdx.graphics.getDeltaTime();
+			if(bigstar.y + 29 < 0) bigStarIter.remove();
+			if(bigstar.overlaps(whale)) {
+				plopSound.play();
+				bigStarIter.remove();
+				whale.addScore(5);
+				whale.addHealth(5);
 			}
 		}
 	}

@@ -17,13 +17,15 @@ public class Whale extends Rectangle {
     private double Health = 100;
     private int Score = 0;
 
+    // each Whale Image is incremented from the original, either
+    // 20% increase, 40, 70, etcs
     private Texture whale_1 = new Texture(Gdx.files.internal("star_whale.png"));
-    //private Texture whale_2 = new Texture(Gdx.files.internal("star_whale_20.png"));
-    //private Texture whale_3 = new Texture(Gdx.files.internal("star_whale_40.png"));
-    //private Texture whale_4 = new Texture(Gdx.files.internal("star_whale_70.png"));
-    //private double whale_w_2 = 32 * 1.2;
-    //private double whale_w_3 = 32 * 1.4;
-    //private double whale_w_4 = 32 * 1.7;
+    private Texture whale_2 = new Texture(Gdx.files.internal("star_whale_20.png"));
+    private Texture whale_3 = new Texture(Gdx.files.internal("star_whale_40.png"));
+    private Texture whale_4 = new Texture(Gdx.files.internal("star_whale_70.png"));
+    private double whale_w_2 = 32 * 1.2;
+    private double whale_w_3 = 32 * 1.4;
+    private double whale_w_4 = 32 * 1.7;
 
     public Whale(float x, float y, float width, float height, Texture whaleImage) {
         super(x, y, width, height);
@@ -52,6 +54,9 @@ public class Whale extends Rectangle {
             whaleImage.dispose();
             Health = 0;
             // Game Over?
+            //Toast toast = Toast.makeText(context, text, duration);
+            //toast.show();
+
         } else Health -= .2; // TODO: Find the sweet Spot
     }
 
@@ -72,22 +77,25 @@ public class Whale extends Rectangle {
         Score += 1 * x;
     }
 
+    // There must be a better way to do this!
+    // TODO: BE SMARTER!
     public void refreshWhale(){
         if(Score < 50) {
             setWhaleImage(whale_1);
         }
         if(Score >= 50 && Score < 100) {
-            //setWhaleImage(whale_2);
-            //this.setWidth(((float) whale_w_2));
+            setWhaleImage(whale_2);
+            this.setWidth(((float) whale_w_2));
         }
         if(Score >= 100 && Score < 200) {
-            //setWhaleImage(whale_3);
-            //this.setWidth(((float) whale_w_3));
+            setWhaleImage(whale_3);
+            this.setWidth(((float) whale_w_3));
         }
         if(Score >= 200) {
-            //setWhaleImage(whale_4);
-            //this.setWidth(((float) whale_w_4));
+            setWhaleImage(whale_4);
+            this.setWidth(((float) whale_w_4));
         }
+        // RIGHT now, 200 is the top level...
     }
 
 }
