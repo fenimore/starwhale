@@ -152,9 +152,7 @@ public class GameScreen implements Screen {
         }
 
         // Check Whale size
-        if(alive) {
-            whale.refreshWhale();
-        }
+        whale.refreshWhale();
         // Update stats
         whaleHealth = "Health " + whale.getHealth();
         starScore = "Score: " + whale.getScore();
@@ -178,9 +176,9 @@ public class GameScreen implements Screen {
         if (!alive){
             whaleImage.dispose();
             scoreBitmap.draw(batch, "You've Died", 85, 400);
+            whale.perish();
         } else if (alive) {
             batch.draw(whale.getWhaleImage(), whale.x, whale.y);
-            whale.perish(); // DIE!
         }
         // Score
         scoreBitmap.setColor(1.0f, 1.0f, 1.0f, 1.0f);
@@ -240,7 +238,7 @@ public class GameScreen implements Screen {
             Rectangle smallStar = smallStarIter.next();
             smallStar.y -= 250 * Gdx.graphics.getDeltaTime();
             if(smallStar.y + 19 < 0) smallStarIter.remove();
-            if(smallStar.overlaps(whale) && alive) {
+            if(smallStar.overlaps(whale) && alive) { // PUT alive variable in Whale object?
                 plopSound.play();
                 smallStarIter.remove();
                 whale.addScore(1);

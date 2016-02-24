@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Rectangle;
 /**
  * Created by fen on 2/24/16.
  */
+// TODO: Add
 public class Whale extends Rectangle {
 
     // Looks like a whale, no?
