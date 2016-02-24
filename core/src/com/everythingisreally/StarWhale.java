@@ -45,8 +45,8 @@ public class StarWhale extends ApplicationAdapter {
 	private int whaleDirection = 0; //lets say 0 is right?
 	private float x_start = 800 / 2 - 32 / 2; // x origin
 	private float y_start = 70; // y origin
-	private float w_start = 16; // width
-	private float h_start = 32; // height
+	private float w_start = 32; // width
+	private float h_start = 64; // height
 
 	// Health and Score
 	private String starScore;
@@ -75,15 +75,15 @@ public class StarWhale extends ApplicationAdapter {
 		// Sprite Batch
 		batch = new SpriteBatch();
 
+		// create the Whale, extending Rectangle
+		whale = new Whale(x_start, y_start, w_start, h_start, whaleImage);
 		// create a Rectangle to logically represent the bucket
 		// Replace by Whale Class extending Rectangle
-		whale = new Rectangle();
-		whale.x = 800 / 2 - 32 / 2; // center the whale horizontally
-		whale.y = 20; // bottom left corner of the whale is 20 pixels above the bottom screen edge
-		whale.width = w_start;
-		whale.height = h_start;
-
-
+		//whale = new Rectangle();
+		//whale.x = 800 / 2 - 32 / 2; // center the whale horizontally
+		//whale.y = 20; // bottom left corner of the whale is 20 pixels above the bottom screen edge
+		//whale.width = w_start;
+		//whale.height = h_start;
 
 		// create the raindrops array and spawn the first raindrop
 		smallStars = new Array<Rectangle>();
