@@ -126,6 +126,12 @@ public class StarWhale extends ApplicationAdapter {
 		whaleHealth = "Health " + whale.getHealth();
 		starScore = "Score: " + whale.getScore();
 
+		// Drain Health at interval
+		if(TimeUtils.nanoTime() - lastDrainTime > 100500000){
+			whale.drainHealth();
+			lastDrainTime = TimeUtils.nanoTime();
+		}
+
 		// tell the SpriteBatch to render in the
 		// coordinate system specified by the camera.
 		batch.setProjectionMatrix(camera.combined);
