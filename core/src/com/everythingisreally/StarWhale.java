@@ -177,17 +177,19 @@ public class StarWhale extends ApplicationAdapter {
 		// check if we need to create a new star
 		if(TimeUtils.nanoTime() - lastStarTime > 1000000000) spawnSmallStar();
 
-		// move the stars, remove any that are beneath the bottom edge of
-		// the screen or that hit the bucket. In the later case we play back
-		// a sound effect as well.
+		// The Spawning from Array?
+		// Remove below screen and add health/score when collision
 		Iterator<Rectangle> iter = smallStars.iterator();
-		while(iter.hasNext()) {
+		// the SMALL star updater
+		while(iter.hasNext()){
 			Rectangle smallStar = iter.next();
-			smallStar.y -= 200 * Gdx.graphics.getDeltaTime();
-			if(smallStar.y + 64 < 0) iter.remove();
+			smallStar.y -= 250 * Gdx.graphics.getDeltaTime();
+			if(smallStar.y + 19 < 0) iter.remove();
 			if(smallStar.overlaps(whale)) {
 				plopSound.play();
 				iter.remove();
+				whale.addScore(1);
+				whale.addHealth(1);
 			}
 		}
 	}
