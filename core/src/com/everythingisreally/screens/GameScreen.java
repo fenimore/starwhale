@@ -147,10 +147,10 @@ public class GameScreen implements Screen {
         // tell the camera to update its matrices.
         camera.update();
 
-        if (Gdx.input.isKeyPressed(Input.Keys.BACK)){
-            game.setScreen(new MainMenuScreen(game));
-            dispose();
-        }
+        //if (Gdx.input.isKeyPressed(Input.Keys.BACK)){
+        //    game.setScreen(new MainMenuScreen(game));
+        //    dispose();
+        //}
 
         // Check Whale size
         whale.refreshWhale();

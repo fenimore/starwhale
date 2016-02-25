@@ -70,17 +70,17 @@ public class MainMenuScreen implements Screen {
         // Load a TTF oh lord
         game.batch.begin();
 
-        font30.draw(game.batch, "Lorem ipsum dolor sit amet, consectetur adipiscing \n" +
-                "elit. Aenean nunc metus, iaculis quis blandit eget, vehicula et dui. \n" +
-                "Sed lectus lacus, tincidunt at risus ac, pharetra pharetra ex, \n" +
-                "ornare ligula, id placerat sem. Sed non lectus non libero suscipit. \n" +
-                "Integer malesuada libero vestibulum venenatis semper. Mauris \n" +
-                "condimentum orci sed blandit scelerisque. Donec ut diam porta, \n" +
-                "euismod velit et, dignissim elit. Cras non mauris arcu. Nam \n" +
-                "ipsum libero, posuere sed leo sit amet, ornare fringilla erat.\n" +
-                " Pellentesque et faucibus nunc. Vestibulum mattis mi tincidunt\n" +
-                " luctus pulvinar. Maecenas porta commodo nibh, eget sollicitudin mi.\n" +
-                " Phasellus semper augue ac odio maximus, in varius sapien imperdiet. "
+        font30.draw(game.batch, "  Lorem ipsum dolor sit amet, consectetur  \n" +
+                "elit. Aenean nunc metus, iaculis quis blandit. \n" +
+                "Sed lectus lacus, tincidunt at risus ac,\n" +
+                "ornare ligula, id placerat sem. Sed non \n" +
+                "Integer malesuada libero vestibulum auris \n" +
+                "condimentum orci sed blandit scelerisque, \n" +
+                "euismod velit et, elit. Cras nonam \n" +
+                "ipsum libero, posuere sed leo sit amet.\n" +
+                "Pellentesque et faucibus nunc. Vestibulum \n" +
+                "pulvinar. Maecenas porta commodo nibh.\n" +
+                "Phasellus semper augue ac odio maximus"
                 , 50, 650);
         game.batch.draw(whaleImage, x_start, y_start);
         font50.draw(game.batch, "Star Whale ", 100, 850);
