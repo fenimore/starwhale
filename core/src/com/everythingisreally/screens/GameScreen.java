@@ -1,7 +1,6 @@
 package com.everythingisreally.screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
@@ -14,6 +13,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.everythingisreally.StarWhale;
+import com.everythingisreally.objects.BigStar;
 import com.everythingisreally.objects.SmallStar;
 import com.everythingisreally.objects.Whale;
 
@@ -30,10 +30,8 @@ public class GameScreen implements Screen {
     final StarWhale game;
 
     // The Variables
-    //private Texture smallStarImage;
-    private Texture bigStarImage;
     private Texture whaleImage;
-    private Sound plopSound;
+    //private Sound plopSound;
 
     // Set Up the Camera and Sprite Batch so that image scales
     private OrthographicCamera camera;
@@ -44,8 +42,8 @@ public class GameScreen implements Screen {
     // The Programmable Shapes
     private Whale whale;
     //private Array<Rectangle> smallStars;
-    private Array<SmallStar> _smallStars;
-    private Array<Rectangle> bigStars;
+    private Array<SmallStar> smallStars;
+    private Array<BigStar> bigStars;
 
     // Intervals for Star spawn and Drain health
     private long lastBigStarTime;
@@ -79,10 +77,7 @@ public class GameScreen implements Screen {
         healthBitmap = new BitmapFont();
         alive = true;
 
-        //Star Textures
-        //smallStarImage = new Texture(Gdx.files.internal("small_star.png"));
-        bigStarImage = new Texture(Gdx.files.internal("big_star.png"));
-
+        // Star textures are handled in the class construction
         // Whale Textures?
         whaleImage = new Texture(Gdx.files.internal("star_whale.png"));
 
@@ -101,8 +96,8 @@ public class GameScreen implements Screen {
 
         // create the raindrops array and spawn the first raindrop
         //smallStars = new Array<Rectangle>();
-        bigStars = new Array<Rectangle>();
-        _smallStars = new Array<SmallStar>();
+        bigStars = new Array<BigStar>();
+        smallStars = new Array<SmallStar>();
         spawnSmallStar();
         spawnBigStar();
 
@@ -114,16 +109,12 @@ public class GameScreen implements Screen {
 
     private void spawnSmallStar() {
         SmallStar smallStar = new SmallStar();
-        _smallStars.add(smallStar);
+        smallStars.add(smallStar);
         lastStarTime = TimeUtils.nanoTime();
     }
 
     private void spawnBigStar() {
-        Rectangle bigStar = new Rectangle();
-        bigStar.x = MathUtils.random(0, 800 - 64);
-        bigStar.y = 1150;
-        bigStar.width = 29;
-        bigStar.height = 29;
+        BigStar bigStar = new BigStar();
         bigStars.add(bigStar);
         lastBigStarTime = TimeUtils.nanoTime();
     }
@@ -191,15 +182,11 @@ public class GameScreen implements Screen {
         // Whale - GET THE appropriate Whale Sprie
 
         // Stars
-        for(SmallStar smallStar: _smallStars) {
+        for(SmallStar smallStar: smallStars) {
             batch.draw(smallStar.getStarImage(), smallStar.x, smallStar.y);
         }
-
-        //for(Rectangle smallStar: smallStars) {
-        //    batch.draw(smallStarImage, smallStar.x, smallStar.y);
-        //}
-        for(Rectangle bigStar: bigStars) {
-            batch.draw(bigStarImage, bigStar.x, bigStar.y);
+        for(BigStar bigStar: bigStars) {
+            batch.draw(bigStar.getStarImage(), bigStar.x, bigStar.y);
         }
         batch.end();
 
@@ -239,7 +226,7 @@ public class GameScreen implements Screen {
         // Falling Stars, and Collision Checking
         // Remove below screen and add health/score when collision
         //Iterator<Rectangle> smallStarIter = smallStars.iterator();
-        Iterator<SmallStar> smallStarIter = _smallStars.iterator();
+        Iterator<SmallStar> smallStarIter = smallStars.iterator();
         // the SMALL star updater
         while(smallStarIter.hasNext()){
             SmallStar smallStar = smallStarIter.next();
@@ -248,21 +235,21 @@ public class GameScreen implements Screen {
             if(smallStar.overlaps(whale) && alive) { // PUT alive variable in Whale object?
                 //plopSound.play(); // More annoying than good
                 smallStarIter.remove();
-                whale.addScore(1);
+                whale.addScore(1); //1
                 whale.addHealth(smallStar.getNutrients()); // Calories/Nutrients are the health
             }
         }
-        Iterator<Rectangle> bigStarIter = bigStars.iterator();
+        Iterator<BigStar> bigStarIter = bigStars.iterator();
         // the BIG star updater
         while(bigStarIter.hasNext()){
-            Rectangle bigstar =  bigStarIter.next();
-            bigstar.y -= 250 * Gdx.graphics.getDeltaTime();
-            if(bigstar.y + 29 < 0) bigStarIter.remove();
-            if(bigstar.overlaps(whale) && alive) {
+            BigStar bigStar =  bigStarIter.next();
+            bigStar.y -= 250 * Gdx.graphics.getDeltaTime();
+            if(bigStar.y + 29 < 0) bigStarIter.remove();
+            if(bigStar.overlaps(whale) && alive) {
                 //plopSound.play();
                 bigStarIter.remove();
-                whale.addScore(5);
-                whale.addHealth(5);
+                whale.addScore(5); //5
+                whale.addHealth(bigStar.getNutrients()); //5
             }
         }
     }
@@ -292,9 +279,8 @@ public class GameScreen implements Screen {
         // TODO: Read about disposal
         // dispose of all the native resources
         //smallStarImage.dispose();
-        bigStarImage.dispose();
+        /// do I need to dispose the bigstars?.dispose();
         whaleImage.dispose();
-        plopSound.dispose();
         batch.dispose();
     }
 }

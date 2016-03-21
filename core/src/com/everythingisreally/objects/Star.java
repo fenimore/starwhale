@@ -11,7 +11,7 @@ public class Star extends Rectangle {
     // Looks like a whale, no?
     private Texture starImage;
     // How much it heals
-    private int Nutrients;
+    private double Nutrients;
 
     /**
      * Constructor Methods
@@ -25,7 +25,7 @@ public class Star extends Rectangle {
         this.starImage = starImag;
     }
     // detailed constructor
-    public Star(float x, float y, float width, float height, Texture starImag, int nutrient) {
+    public Star(float x, float y, float width, float height, Texture starImag, double nutrient) {
         super(x, y, width, height);
         this.starImage = starImag;
         this.Nutrients =  nutrient;
@@ -43,7 +43,7 @@ public class Star extends Rectangle {
         return Nutrients;
     }
 
-    public void setNutrients(int nutrients) {
+    public void setNutrients(double nutrients) {
         Nutrients = nutrients;
     }
 }
