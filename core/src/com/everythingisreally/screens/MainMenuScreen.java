@@ -22,6 +22,8 @@ public class MainMenuScreen implements Screen {
     OrthographicCamera camera;
 
     private Texture whaleImage;
+    private Texture galaxy;
+    private Texture blackhole;
     // Whale Placement
     ///private int RIGHT = 0;
     //private int LEFT = 1;
@@ -41,6 +43,8 @@ public class MainMenuScreen implements Screen {
         camera.setToOrtho(false, 800, 1150);
 
         whaleImage = new Texture(Gdx.files.internal("star_whale.png"));
+        galaxy = new Texture(Gdx.files.internal("galaxy.png"));
+        blackhole = new Texture(Gdx.files.internal("black_hole.png"));
     }
 
     @Override
@@ -83,8 +87,12 @@ public class MainMenuScreen implements Screen {
                 "Phasellus semper augue ac odio maximus"
                 , 50, 650);
         game.batch.draw(whaleImage, x_start, y_start);
+        game.batch.draw(galaxy, 110, 400);
+        game.batch.draw(blackhole, 400, 800);
+
         font50.draw(game.batch, "Star Whale ", 100, 850);
         game.batch.end();
+
         if (Gdx.input.justTouched()) {
             game.setScreen(new GameScreen(game));
             dispose();
@@ -114,6 +122,8 @@ public class MainMenuScreen implements Screen {
     @Override
     public void dispose() {
         whaleImage.dispose();
+        galaxy.dispose();
+        blackhole.dispose();
         game.batch.dispose();
 
     }
