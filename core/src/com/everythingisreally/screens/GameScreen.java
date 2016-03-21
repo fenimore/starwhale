@@ -14,6 +14,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.everythingisreally.StarWhale;
+import com.everythingisreally.objects.SmallStar;
 import com.everythingisreally.objects.Whale;
 
 import java.util.Iterator;
@@ -41,6 +42,7 @@ public class GameScreen implements Screen {
     // The Programmable Shapes
     private Whale whale;
     private Array<Rectangle> smallStars;
+    private Array<SmallStar> _smallStars;
     private Array<Rectangle> bigStars;
 
     // Intervals for Star spawn and Drain health
@@ -98,6 +100,7 @@ public class GameScreen implements Screen {
         // create the raindrops array and spawn the first raindrop
         smallStars = new Array<Rectangle>();
         bigStars = new Array<Rectangle>();
+        _smallStars = new Array<SmallStar>();
         spawnSmallStar();
         spawnBigStar();
 
@@ -190,6 +193,10 @@ public class GameScreen implements Screen {
         // Whale - GET THE appropriate Whale Sprie
 
         // Stars
+        for(SmallStar smallStar: _smallStars) {
+            batch.draw(smallStar.getStarImage(), smallStar.x, smallStar.y);
+        }
+
         for(Rectangle smallStar: smallStars) {
             batch.draw(smallStarImage, smallStar.x, smallStar.y);
         }

@@ -4,6 +4,8 @@
 - !!Make Star Class
 	- Big Star/ Small Star
 	- Special Star?
+	- Star class and then big/small star
+	which inherits from star class
 - Find sweet spots
 	- for drain
 	- for star generation
