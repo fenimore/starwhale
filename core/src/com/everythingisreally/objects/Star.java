@@ -10,17 +10,25 @@ import com.badlogic.gdx.math.Rectangle;
 public class Star extends Rectangle {
     // Looks like a whale, no?
     private Texture starImage;
-
     // How much it heals
-    private double Nutrients;
+    private int Nutrients;
 
-    // The constructor
+    /**
+     * Constructor Methods
+     */
     public Star(){
         super();
     }
-    public Star(float x, float y, float width, float height, Texture starImage) {
+    // basic constructor
+    public Star(float x, float y, float width, float height, Texture starImag) {
         super(x, y, width, height);
-        this.starImage = starImage;
+        this.starImage = starImag;
+    }
+    // detailed constructor
+    public Star(float x, float y, float width, float height, Texture starImag, int nutrient) {
+        super(x, y, width, height);
+        this.starImage = starImag;
+        this.Nutrients =  nutrient;
     }
 
     public Texture getStarImage() {
@@ -35,7 +43,7 @@ public class Star extends Rectangle {
         return Nutrients;
     }
 
-    public void setNutrients(double nutrients) {
+    public void setNutrients(int nutrients) {
         Nutrients = nutrients;
     }
 }

@@ -30,7 +30,7 @@ public class GameScreen implements Screen {
     final StarWhale game;
 
     // The Variables
-    private Texture smallStarImage;
+    //private Texture smallStarImage;
     private Texture bigStarImage;
     private Texture whaleImage;
     private Sound plopSound;
@@ -39,9 +39,11 @@ public class GameScreen implements Screen {
     private OrthographicCamera camera;
     private SpriteBatch batch;
 
+    // Overall Time played
+
     // The Programmable Shapes
     private Whale whale;
-    private Array<Rectangle> smallStars;
+    //private Array<Rectangle> smallStars;
     private Array<SmallStar> _smallStars;
     private Array<Rectangle> bigStars;
 
@@ -78,14 +80,14 @@ public class GameScreen implements Screen {
         alive = true;
 
         //Star Textures
-        smallStarImage = new Texture(Gdx.files.internal("small_star.png"));
+        //smallStarImage = new Texture(Gdx.files.internal("small_star.png"));
         bigStarImage = new Texture(Gdx.files.internal("big_star.png"));
 
         // Whale Textures?
         whaleImage = new Texture(Gdx.files.internal("star_whale.png"));
 
         // Sounds? TODO: Classy music
-        plopSound = Gdx.audio.newSound(Gdx.files.internal("drop.wav"));
+        //plopSound = Gdx.audio.newSound(Gdx.files.internal("drop.wav"));
 
         // Scale Textures ETC to same size
         camera = new OrthographicCamera();
@@ -98,7 +100,7 @@ public class GameScreen implements Screen {
         whale = new Whale(x_start, y_start, w_start, h_start, whaleImage);
 
         // create the raindrops array and spawn the first raindrop
-        smallStars = new Array<Rectangle>();
+        //smallStars = new Array<Rectangle>();
         bigStars = new Array<Rectangle>();
         _smallStars = new Array<SmallStar>();
         spawnSmallStar();
@@ -111,12 +113,8 @@ public class GameScreen implements Screen {
 
 
     private void spawnSmallStar() {
-        Rectangle smallStar = new Rectangle();
-        smallStar.x = MathUtils.random(0, 800 - 64);
-        smallStar.y = 1150;
-        smallStar.width = 19;
-        smallStar.height = 19;
-        smallStars.add(smallStar);
+        SmallStar smallStar = new SmallStar();
+        _smallStars.add(smallStar);
         lastStarTime = TimeUtils.nanoTime();
     }
 
@@ -197,9 +195,9 @@ public class GameScreen implements Screen {
             batch.draw(smallStar.getStarImage(), smallStar.x, smallStar.y);
         }
 
-        for(Rectangle smallStar: smallStars) {
-            batch.draw(smallStarImage, smallStar.x, smallStar.y);
-        }
+        //for(Rectangle smallStar: smallStars) {
+        //    batch.draw(smallStarImage, smallStar.x, smallStar.y);
+        //}
         for(Rectangle bigStar: bigStars) {
             batch.draw(bigStarImage, bigStar.x, bigStar.y);
         }
@@ -240,17 +238,18 @@ public class GameScreen implements Screen {
 
         // Falling Stars, and Collision Checking
         // Remove below screen and add health/score when collision
-        Iterator<Rectangle> smallStarIter = smallStars.iterator();
+        //Iterator<Rectangle> smallStarIter = smallStars.iterator();
+        Iterator<SmallStar> smallStarIter = _smallStars.iterator();
         // the SMALL star updater
         while(smallStarIter.hasNext()){
-            Rectangle smallStar = smallStarIter.next();
+            SmallStar smallStar = smallStarIter.next();
             smallStar.y -= 250 * Gdx.graphics.getDeltaTime();
             if(smallStar.y + 19 < 0) smallStarIter.remove();
             if(smallStar.overlaps(whale) && alive) { // PUT alive variable in Whale object?
-                plopSound.play();
+                //plopSound.play(); // More annoying than good
                 smallStarIter.remove();
                 whale.addScore(1);
-                whale.addHealth(1);
+                whale.addHealth(smallStar.getNutrients()); // Calories/Nutrients are the health
             }
         }
         Iterator<Rectangle> bigStarIter = bigStars.iterator();
@@ -260,7 +259,7 @@ public class GameScreen implements Screen {
             bigstar.y -= 250 * Gdx.graphics.getDeltaTime();
             if(bigstar.y + 29 < 0) bigStarIter.remove();
             if(bigstar.overlaps(whale) && alive) {
-                plopSound.play();
+                //plopSound.play();
                 bigStarIter.remove();
                 whale.addScore(5);
                 whale.addHealth(5);
@@ -292,7 +291,7 @@ public class GameScreen implements Screen {
     public void dispose() {
         // TODO: Read about disposal
         // dispose of all the native resources
-        smallStarImage.dispose();
+        //smallStarImage.dispose();
         bigStarImage.dispose();
         whaleImage.dispose();
         plopSound.dispose();

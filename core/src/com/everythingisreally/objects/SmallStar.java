@@ -8,12 +8,12 @@ import com.badlogic.gdx.math.MathUtils;
  * Created by fen on 3/21/16.
  */
 public class SmallStar extends Star {
-    int width = 19;
-    int height = 19;
-    int x_coord = MathUtils.random(0, 800 - 64);
-    int y_coord = 1150;
-
-    Texture starImage = new Texture(Gdx.files.internal("star_whale.png"));
+    private int w = 19;
+    private int h = 19;
+    private int x_coord = MathUtils.random(0, 820 - 64); // what is the lenght?
+    private int y_coord = 1150;
+    private int nutrients = 1;
+    private Texture image = new Texture(Gdx.files.internal("small_star.png"));
 
     public SmallStar(float x, float y, float width, float height, Texture starImage) {
         super(x, y, width, height, starImage);
@@ -21,9 +21,10 @@ public class SmallStar extends Star {
     public SmallStar(){
         this.x = x_coord;
         this.y = y_coord;
-        this.width = width;
-        this.height = height;
-        this.starImage = starImage;
+        this.width = w;
+        this.height = h;
+        this.setStarImage(image);
+        this.setNutrients(nutrients);
     }
 
 }
