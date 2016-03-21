@@ -201,6 +201,7 @@ public class GameScreen implements Screen {
         }
 
         // The movements!
+        // But not for the first few seconds TODO:
         if(whaleDirection == RIGHT) whale.x -= 250 * Gdx.graphics.getDeltaTime();
         if(whaleDirection == LEFT) whale.x += 250 * Gdx.graphics.getDeltaTime();
 

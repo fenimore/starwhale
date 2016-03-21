@@ -10,7 +10,7 @@ import com.badlogic.gdx.math.MathUtils;
 public class SmallStar extends Star {
     private int w = 19;
     private int h = 19;
-    private int x_coord = MathUtils.random(0, 820 - 64); // what is the lenght?
+    private int x_coord = MathUtils.random(0, 800); // what is the length??
     private int y_coord = 1150;
     private double nutrients = 1;
     private Texture image = new Texture(Gdx.files.internal("small_star.png"));

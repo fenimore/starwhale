@@ -84,11 +84,8 @@ public class MainMenuScreen implements Screen {
                 , 50, 650);
         game.batch.draw(whaleImage, x_start, y_start);
         font50.draw(game.batch, "Star Whale ", 100, 850);
-        //game.font.draw(game.batch, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean nunc metus, iaculis quis blandit eget, vehicula et dui. Sed lectus lacus, tincidunt at risus ac, pharetra pharetra ex. Nullam at ornare ligula, id placerat sem. Sed non lectus non libero suscipit hendrerit. Integer malesuada libero vestibulum venenatis semper. Mauris condimentum orci sed blandit scelerisque. Donec ut diam porta, euismod velit et, dignissim elit. Cras non mauris arcu. Nam ipsum libero, posuere sed leo sit amet, ornare fringilla erat. Pellentesque et faucibus nunc. Vestibulum mattis mi tincidunt luctus pulvinar. Maecenas porta commodo nibh, eget sollicitudin mi. Phasellus semper augue ac odio maximus, in varius sapien imperdiet. "
-        //        , 100, 650);
         game.batch.end();
-
-        if (Gdx.input.isTouched()) {
+        if (Gdx.input.justTouched()) {
             game.setScreen(new GameScreen(game));
             dispose();
         }
@@ -116,6 +113,8 @@ public class MainMenuScreen implements Screen {
 
     @Override
     public void dispose() {
+        whaleImage.dispose();
+        game.batch.dispose();
 
     }
 }

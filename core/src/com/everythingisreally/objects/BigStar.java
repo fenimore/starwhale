@@ -13,7 +13,7 @@ public class BigStar extends Star {
     private int x_coord = MathUtils.random(0, 800); // what is the lenght?
     private int y_coord = 1150;
     private double nutrients = 5;
-    private Texture image = new Texture(Gdx.files.internal("small_star.png"));
+    private Texture image = new Texture(Gdx.files.internal("big_star.png"));
 
     public BigStar(float x, float y, float width, float height, Texture starImage) {
         super(x, y, width, height, starImage);
