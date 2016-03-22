@@ -58,7 +58,7 @@ public class ClusterScreen implements Screen {
 
     @Override
     public void render(float delta) { // this changed the difficutly radically
-        world.update(delta);
+        world.update();
         renderer.render();
 
 
@@ -90,6 +90,8 @@ public class ClusterScreen implements Screen {
         // dispose of all the native resources
         //smallStarImage.dispose();
         /// do I need to dispose the bigstars?.dispose();
+        world.getWhale().getWhaleImage().dispose();
+        renderer.getBatch().dispose();
     }
 }
 

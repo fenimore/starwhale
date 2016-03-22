@@ -59,7 +59,7 @@ public class GameWorld {
     }
 
 
-    public void update(float delta){
+    public void update(){
         Gdx.app.log("this", "update");
 
         // what is current time?
@@ -109,18 +109,16 @@ public class GameWorld {
         if(whale.x > 800 - 32) whale.x = 800 - 32;
 
         // check if we need to create a new star TODO: Find sweet Spot
-        if(TimeUtils.nanoTime() - lastStarTime > 99919990) spawnSmallStar();
+        if(TimeUtils.millis() - TimeUtils.nanosToMillis(lastStarTime) > 50000000) spawnSmallStar();
         // Spawn new big star at interval
         // THIS IS MOSTLY BROKEN TODO: Make this work better...
-        if(TimeUtils.nanoTime() - lastBigStarTime > 1999999990){
+        if(TimeUtils.millis() - lastBigStarTime > 999999990){
             // flip a coin
             int toss = MathUtils.random(0, 1000);
             if(toss == 0){
                 spawnBigStar();
-            }else {
                 lastBigStarTime = TimeUtils.nanoTime();
             }
-            spawnBigStar();
         }
 
 

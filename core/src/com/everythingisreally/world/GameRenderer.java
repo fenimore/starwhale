@@ -35,6 +35,10 @@ public class GameRenderer {
     private String whaleHealth;
     BitmapFont healthBitmap;
 
+    public SpriteBatch getBatch() {
+        return batch;
+    }
+
     public GameRenderer(GameWorld world){
         gameWorld = world;
         camera = new OrthographicCamera();
