@@ -9,7 +9,9 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 
+import com.badlogic.gdx.math.Circle;
 import com.everythingisreally.StarWhale;
+import com.everythingisreally.objects.Galaxy;
 
 /**
  * Created by fen on 2/24/16.
@@ -22,8 +24,9 @@ public class MainMenuScreen implements Screen {
     OrthographicCamera camera;
 
     private Texture whaleImage;
-    private Texture galaxy;
-    private Texture blackhole;
+    private Texture galaxyImage;
+    private Texture blackholeImage;
+    private Galaxy galaxy;
     // Whale Placement
     ///private int RIGHT = 0;
     //private int LEFT = 1;
@@ -43,8 +46,10 @@ public class MainMenuScreen implements Screen {
         camera.setToOrtho(false, 800, 1150);
 
         whaleImage = new Texture(Gdx.files.internal("star_whale.png"));
-        galaxy = new Texture(Gdx.files.internal("galaxy.png"));
-        blackhole = new Texture(Gdx.files.internal("black_hole.png"));
+        galaxyImage = new Texture(Gdx.files.internal("galaxy.png"));
+        blackholeImage = new Texture(Gdx.files.internal("black_hole.png"));
+
+        galaxy = new Galaxy(600, 900, 150, galaxyImage);
     }
 
     @Override
@@ -71,6 +76,7 @@ public class MainMenuScreen implements Screen {
         generator.dispose(); // don't forget to dispose to avoid memory leaks!
 
 
+
         // Load a TTF oh lord
         game.batch.begin();
 
@@ -87,16 +93,22 @@ public class MainMenuScreen implements Screen {
                 "Phasellus semper augue ac odio maximus"
                 , 50, 650);
         game.batch.draw(whaleImage, x_start, y_start);
-        game.batch.draw(galaxy, 110, 400);
-        game.batch.draw(blackhole, 400, 800);
+        game.batch.draw(galaxy.getGalaxyImage(), galaxy.getSpriteCorner()[0], galaxy.getSpriteCorner()[1]);
+        //game.batch.draw();
+        //game.batch.draw(blackholeImage, 400, 800);
 
         font50.draw(game.batch, "Star Whale ", 100, 850);
         game.batch.end();
 
+        // Take input of galaxy
         if (Gdx.input.justTouched()) {
-            game.setScreen(new GameScreen(game));
-            dispose();
+            if (galaxy.is_touched(Gdx.input.getX(), Gdx.input.getY())) {
+                game.setScreen(new GameScreen(game));
+                dispose();
+                System.out.println("Is touched");
+            } else System.out.println("nothing touched");
         }
+
     }
 
     @Override
@@ -122,9 +134,10 @@ public class MainMenuScreen implements Screen {
     @Override
     public void dispose() {
         whaleImage.dispose();
-        galaxy.dispose();
-        blackhole.dispose();
+        galaxyImage.dispose();
+        blackholeImage.dispose();
         game.batch.dispose();
 
     }
+
 }

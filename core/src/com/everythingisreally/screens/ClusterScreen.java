@@ -21,6 +21,8 @@ import java.util.Iterator;
 
 /**
  * Created by fen on 2/24/16.
+ * AS OF NOW THIS IS EXACTLY THE SAME AS GAMESCREEN, TO SEE IF WE CAN
+ * HAVE MULTIPLE LEVELS IN A SELECTION MODE
  */
 
 //TODO: FIND SWEET SPOT
