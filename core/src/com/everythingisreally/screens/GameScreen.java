@@ -16,6 +16,8 @@ import com.everythingisreally.StarWhale;
 import com.everythingisreally.objects.BigStar;
 import com.everythingisreally.objects.SmallStar;
 import com.everythingisreally.objects.Whale;
+import com.everythingisreally.world.GameRenderer;
+import com.everythingisreally.world.GameWorld;
 
 import java.util.Iterator;
 
@@ -38,7 +40,6 @@ public class GameScreen implements Screen {
     private SpriteBatch batch;
 
     // Overall Time played
-    //
     private long overallTime;
     private long firstTime;
     private boolean openingPause; // This is a peculiar check
@@ -75,6 +76,11 @@ public class GameScreen implements Screen {
     public GameScreen(final StarWhale gam) {
         this.game = gam;
 
+        //world = new GameWorld(whale); // initialize world
+        //renderer = new GameRenderer(world); // initialize renderer
+        // Scale Textures ETC to same size
+        camera = new OrthographicCamera();
+        camera.setToOrtho(false, 800, 1150);
         //Health and Score Initial to 100 and 0
         // TODO: Health Bar
         starScore = "score: 0";
@@ -90,18 +96,14 @@ public class GameScreen implements Screen {
         // Sounds? TODO: Classy music
         //plopSound = Gdx.audio.newSound(Gdx.files.internal("drop.wav"));
 
-        // Scale Textures ETC to same size
-        camera = new OrthographicCamera();
-        camera.setToOrtho(false, 800, 1150);
+
 
         // Sprite Batch
         batch = new SpriteBatch();
 
         // create the Whale, extending Rectangle
-        whale = new Whale(x_start, y_start, w_start, h_start, whaleImage);
+        whale = new Whale(x_start, y_start, w_start, h_start);
 
-        // create the raindrops array and spawn the first raindrop
-        //smallStars = new Array<Rectangle>();
         bigStars = new Array<BigStar>();
         smallStars = new Array<SmallStar>();
         spawnSmallStar();
@@ -146,6 +148,9 @@ public class GameScreen implements Screen {
 
         // tell the camera to update its matrices.
         camera.update();
+
+        //world.update(delta);
+        //renderer.render();
 
         //if (Gdx.input.isKeyPressed(Input.Keys.BACK)){
         //    game.setScreen(new MainMenuScreen(game));
@@ -222,7 +227,6 @@ public class GameScreen implements Screen {
         }
 
         // The movements!
-        // But not for the first few seconds TODO:
         if(!openingPause){
             if(whaleDirection == RIGHT) whale.x -= 250 * Gdx.graphics.getDeltaTime();
             if(whaleDirection == LEFT) whale.x += 250 * Gdx.graphics.getDeltaTime();
@@ -248,9 +252,8 @@ public class GameScreen implements Screen {
             spawnBigStar();
         }
 
+        // TODO: PUT THESE INTO SEPERATE STAR UPDATING FUNCTION
         // Falling Stars, and Collision Checking
-        // Remove below screen and add health/score when collision
-        //Iterator<Rectangle> smallStarIter = smallStars.iterator();
         Iterator<SmallStar> smallStarIter = smallStars.iterator();
         // the SMALL star updater
         while(smallStarIter.hasNext()){
@@ -307,5 +310,7 @@ public class GameScreen implements Screen {
         /// do I need to dispose the bigstars?.dispose();
         whaleImage.dispose();
         batch.dispose();
+        game.setScreen(new MainMenuScreen(game));
+
     }
 }

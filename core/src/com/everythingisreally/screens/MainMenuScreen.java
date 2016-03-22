@@ -103,7 +103,7 @@ public class MainMenuScreen implements Screen {
         // Take input of galaxy
         if (Gdx.input.justTouched()) {
             if (galaxy.is_touched(Gdx.input.getX(), Gdx.input.getY())) {
-                game.setScreen(new GameScreen(game));
+                game.setScreen(new ClusterScreen(game));
                 dispose();
                 System.out.println("Is touched");
             } else System.out.println("nothing touched");

@@ -28,9 +28,9 @@ public class Whale extends Rectangle {
     private double whale_w_3 = 32 * 1.4;
     private double whale_w_4 = 32 * 1.7;
 
-    public Whale(float x, float y, float width, float height, Texture whaleImage) {
+    public Whale(float x, float y, float width, float height) {
         super(x, y, width, height);
-        this.whaleImage = whaleImage;
+        //this.whaleImage = whaleImage;
     }
 
 
