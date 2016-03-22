@@ -19,7 +19,7 @@ public class StarWhale extends Game {
 	public void create() {
 		batch = new SpriteBatch();
 		//Use LibGDX's default Arial font.
-		font = new BitmapFont();
+		//font = new BitmapFont();
 		this.setScreen(new MainMenuScreen(this));
 	}
 
@@ -28,8 +28,7 @@ public class StarWhale extends Game {
 	}
 
 	public void dispose() {
-		batch.dispose();
-		font.dispose();
+		//font.dispose();
 	}
 
 }
