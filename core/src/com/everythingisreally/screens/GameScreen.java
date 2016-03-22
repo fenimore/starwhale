@@ -38,8 +38,12 @@ public class GameScreen implements Screen {
     private SpriteBatch batch;
 
     // Overall Time played
+    //
+    private long overallTime;
+    private long firstTime;
+    private boolean openingPause; // This is a peculiar check
 
-    // The Programmable Shapes
+    // The Game Play Objects
     private Whale whale;
     //private Array<Rectangle> smallStars;
     private Array<SmallStar> smallStars;
@@ -51,6 +55,7 @@ public class GameScreen implements Screen {
     private long lastStarTime;
 
     // Whale Movement
+    // TODO: Move this into Whale OBject
     private int RIGHT = 0;
     private int LEFT = 1;
     private int whaleDirection = 0; //lets say 0 is right?
@@ -71,6 +76,7 @@ public class GameScreen implements Screen {
         this.game = gam;
 
         //Health and Score Initial to 100 and 0
+        // TODO: Health Bar
         starScore = "score: 0";
         scoreBitmap = new BitmapFont();
         whaleHealth = "Health: 100";
@@ -104,6 +110,8 @@ public class GameScreen implements Screen {
         // Start draining health,
         whale.drainHealth();
         lastDrainTime = TimeUtils.nanoTime();
+        firstTime = TimeUtils.millis();
+        openingPause = true;
     }
 
 
@@ -143,6 +151,15 @@ public class GameScreen implements Screen {
         //    game.setScreen(new MainMenuScreen(game));
         //    dispose();
         //}
+
+        // what is current time?
+        // 1000 milliseconds in a second
+        if (openingPause){
+            overallTime = TimeUtils.millis() -firstTime;
+            System.out.println(Long.toString(overallTime));
+            if (overallTime > 1500) openingPause = false;
+        }
+
 
         // Check Whale size
         whale.refreshWhale();
@@ -198,12 +215,19 @@ public class GameScreen implements Screen {
             } else if(whaleDirection == LEFT) {
                 whaleDirection = RIGHT;
             }
+
+            if(openingPause){
+                openingPause = false;
+            }
         }
 
         // The movements!
         // But not for the first few seconds TODO:
-        if(whaleDirection == RIGHT) whale.x -= 250 * Gdx.graphics.getDeltaTime();
-        if(whaleDirection == LEFT) whale.x += 250 * Gdx.graphics.getDeltaTime();
+        if(!openingPause){
+            if(whaleDirection == RIGHT) whale.x -= 250 * Gdx.graphics.getDeltaTime();
+            if(whaleDirection == LEFT) whale.x += 250 * Gdx.graphics.getDeltaTime();
+        }
+
 
         // make sure the whale stays within the screen bounds
         if(whale.x < 0) whale.x = 0;
