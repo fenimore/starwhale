@@ -36,6 +36,7 @@ public class GameScreen implements Screen {
 
     private Whale whale;
 
+    // TODO: Put this inside Whale Constuctor
     private float x_start = 800 / 2 - 32 / 2; // x origin
     private float y_start = 70; // y origin
     private float w_start = 32; // width
@@ -44,7 +45,7 @@ public class GameScreen implements Screen {
 
     public GameScreen(final StarWhale gam) {
         this.game = gam;
-        whale = new Whale(x_start, y_start, w_start, h_start); // put this in default constructor
+        whale = new Whale(x_start, y_start, w_start, h_start);
 
         // World takes the Whale as argument
         world = new GameWorld(whale); // initialize world
@@ -61,6 +62,13 @@ public class GameScreen implements Screen {
     public void render(float delta) {
         world.update();
         renderer.render();
+
+        /** Doesn't work
+         *         if(world.isLongDead()){
+         *           game.setScreen(new MainMenuScreen(game));
+         *           dispose();
+         *         }
+         */
     }
 
     @Override

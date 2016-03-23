@@ -8,6 +8,7 @@ import com.badlogic.gdx.utils.TimeUtils;
 import com.everythingisreally.objects.BigStar;
 import com.everythingisreally.objects.SmallStar;
 import com.everythingisreally.objects.Whale;
+import com.everythingisreally.screens.MainMenuScreen;
 
 import java.sql.Time;
 import java.util.Iterator;
@@ -28,6 +29,10 @@ public class GameWorld {
     private long overallTime;
     private long firstTime;
     private boolean openingPause; // This is a peculiar check
+    private long timeOfDeath; // Reset Game after a bity
+
+
+    private boolean longDead = false;
 
 
     private boolean alive;
@@ -61,33 +66,36 @@ public class GameWorld {
 
 
     public void update(){
-        Gdx.app.log("this", "update");
+        //Gdx.app.log("GameWorld", "update");
 
-        // what is current time?
         // 1000 milliseconds in a second
+        // Fly straight until clicked
         if (openingPause){
             overallTime = TimeUtils.millis() -firstTime;
             System.out.println(Long.toString(overallTime));
             if (overallTime > 1500) openingPause = false;
         }
 
-        // Check Whale size
+        // Update Whale size
         whale.refreshWhale();
-        //spawnSmallStar();
-        //spawnBigStar();
 
-        if (whale.getHealth() <= 0) {
+        if (alive && whale.getHealth() <= 0){
+            timeOfDeath = TimeUtils.millis();
             alive = false;
         }
+        // For reseting game after Death
+        //if (!alive && TimeUtils.millis() - timeOfDeath > 4000){
+        //    longDead = true;
+        //}
+
         // Drain Health at interval
         if(TimeUtils.nanoTime() - lastDrainTime > 100500000){
             whale.drainHealth();
             lastDrainTime = TimeUtils.nanoTime();
         }
 
-        // process user input
-        // INPUT must be JUST touched, else its buggy
-        if(Gdx.input.justTouched()) {
+        // User Input
+        if(Gdx.input.justTouched()) { // Input must be JUST touched, else bugsss
             if(whaleDirection == RIGHT) {
                 whaleDirection = LEFT;
             } else if(whaleDirection == LEFT) {
@@ -99,35 +107,29 @@ public class GameWorld {
             }
         }
 
-        // The movements!
+        // Whale Movement
         if(!openingPause){
             if(whaleDirection == RIGHT) whale.x -= 250 * Gdx.graphics.getDeltaTime();
             if(whaleDirection == LEFT) whale.x += 250 * Gdx.graphics.getDeltaTime();
         }
 
-        // make sure the whale stays within the screen bounds
+        // Whale and Screen Limits
         if(whale.x < 0) whale.x = 0;
-        if(whale.x > 800 - 32) whale.x = 800 - 32;
+        if(whale.x > 800 - 32) whale.x = 800 - 32; //32??
 
-        // check if we need to create a new star TODO: Find sweet Spot
-        //if(TimeUtils.millis() - TimeUtils.nanosToMillis(lastStarTime) > 10000) spawnSmallStar();
+        // Generate Stars at Interval TODO: Find sweet Spot
         if(TimeUtils.nanoTime() - lastStarTime > 99919990) spawnSmallStar();
-        // Spawn new big star at interval
         if(TimeUtils.nanoTime() - lastBigStarTime > 1999999990){
             // flip a coin
-            int toss = MathUtils.random(0, 100);// this is the probabilty
-            if(toss == 0){
+            int toss = MathUtils.random(0, 100);// this is the probability
+            if(toss == 0){                      // Makes this interesting...
                 spawnBigStar();
                 lastBigStarTime = TimeUtils.nanoTime();
             }
-            //spawnBigStar();
         }
 
-
-        // TODO: PUT THESE INTO SEPERATE STAR UPDATING FUNCTION
-        // Falling Stars, and Collision Checking
+        // Falling Stars, and Collision Checking TODO: PUT THESE INTO SEPERATE STAR UPDATING FUNCTION
         Iterator<SmallStar> smallStarIter = smallStars.iterator();
-        // the SMALL star updater
         while(smallStarIter.hasNext()){
             SmallStar smallStar = smallStarIter.next();
             smallStar.y -= 250 * Gdx.graphics.getDeltaTime();
@@ -140,7 +142,6 @@ public class GameWorld {
             }
         }
         Iterator<BigStar> bigStarIter = bigStars.iterator();
-        // the BIG star updater
         while(bigStarIter.hasNext()){
             BigStar bigStar =  bigStarIter.next();
             bigStar.y -= 250 * Gdx.graphics.getDeltaTime();
@@ -182,5 +183,9 @@ public class GameWorld {
 
     public boolean isAlive() {
         return alive;
+    }
+
+    public boolean isLongDead() {
+        return longDead;
     }
 }
