@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.everythingisreally.objects.stars.BigStar;
 import com.everythingisreally.objects.stars.SmallStar;
 
@@ -16,6 +17,8 @@ public class GameRenderer {
     private GameWorld gameWorld;
     private OrthographicCamera camera; // Orthographic Makes 2d space out of 3D
     private SpriteBatch batch;
+
+    private ShapeRenderer shapeRenderer;
 
     // Health and Score Panels
     private String starScore;
@@ -49,8 +52,10 @@ public class GameRenderer {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.setProjectionMatrix(camera.combined);
 
-        batch.begin();
+        shapeRenderer = new ShapeRenderer();
+        //shapeRenderer.set(ShapeRenderer.ShapeType.Filled);
 
+        batch.begin();
         // Check Whale Status and Draw Whale
         if (!gameWorld.isAlive()){
             gameWorld.getWhale().getWhaleImage().dispose(); // access whale through GameWorld Class
@@ -60,6 +65,7 @@ public class GameRenderer {
             batch.draw(gameWorld.getWhale().getWhaleImage(),
                     gameWorld.getWhale().x, gameWorld.getWhale().y);
         }
+
 
         // Draw Score and Score TODO: Draw bar for health
         scoreBitmap.setColor(1.0f, 1.0f, 1.0f, 1.0f);
@@ -75,7 +81,16 @@ public class GameRenderer {
             batch.draw(bigStar.getStarImage(), bigStar.x, bigStar.y);
         }
 
+
         batch.end();
+
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+
+        // Does this lead to performance issues?y
+        shapeRenderer.setColor(135, 206, 235, 1);
+        shapeRenderer.rect(20, 1075, gameWorld.getWhale().getHealth() * 3, 20); // max health is 300 px
+
+        shapeRenderer.end();
 
         //Update Variables which populate Score and Health Bitmap
         whaleHealth = "Health " + gameWorld.getWhale().getHealth();
