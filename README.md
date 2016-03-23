@@ -1,4 +1,9 @@
-# StarWhaleu
+# StarWhale
+
+## Notes:
+- GameScreen is the Actually Game activity
+  + This stuff is handled by World Classes, Renderer and World
+- each game is a level?
 
 ## TODO:
 
@@ -19,9 +24,8 @@
 
 ### Start Page
 
-- initial GameScreen animation is shitty
-1. universe select
-2. GameScreen - 
+- universe select
+- GameScreen - 
 
 ### Make Pretty
 -  https://github.com/libgdx/libgdx/wiki/2D-Animation
