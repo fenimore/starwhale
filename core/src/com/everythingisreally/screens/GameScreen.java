@@ -243,13 +243,12 @@ public class GameScreen implements Screen {
         // THIS IS MOSTLY BROKEN TODO: Make this work better...
         if(TimeUtils.nanoTime() - lastBigStarTime > 1999999990){
             // flip a coin
-            int toss = MathUtils.random(0, 1000);
+            int toss = MathUtils.random(0, 100);// this is the probabilty
             if(toss == 0){
                 spawnBigStar();
-            }else {
                 lastBigStarTime = TimeUtils.nanoTime();
             }
-            spawnBigStar();
+            //spawnBigStar();
         }
 
         // TODO: PUT THESE INTO SEPERATE STAR UPDATING FUNCTION

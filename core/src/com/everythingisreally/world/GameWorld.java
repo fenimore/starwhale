@@ -9,6 +9,7 @@ import com.everythingisreally.objects.BigStar;
 import com.everythingisreally.objects.SmallStar;
 import com.everythingisreally.objects.Whale;
 
+import java.sql.Time;
 import java.util.Iterator;
 
 /**
@@ -109,14 +110,15 @@ public class GameWorld {
         if(whale.x > 800 - 32) whale.x = 800 - 32;
 
         // check if we need to create a new star TODO: Find sweet Spot
-        if(TimeUtils.millis() - TimeUtils.nanosToMillis(lastStarTime) > 50000000) spawnSmallStar();
+        //if(TimeUtils.millis() - TimeUtils.nanosToMillis(lastStarTime) > 50000000) spawnSmallStar();
         // Spawn new big star at interval
         // THIS IS MOSTLY BROKEN TODO: Make this work better...
-        if(TimeUtils.millis() - lastBigStarTime > 999999990){
+        if(TimeUtils.millis() -
+                TimeUtils.nanosToMillis(lastBigStarTime) > 999999990){
             // flip a coin
             int toss = MathUtils.random(0, 1000);
             if(toss == 0){
-                spawnBigStar();
+                spawnSmallStar();
                 lastBigStarTime = TimeUtils.nanoTime();
             }
         }

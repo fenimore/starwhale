@@ -106,7 +106,11 @@ public class MainMenuScreen implements Screen {
                 game.setScreen(new ClusterScreen(game));
                 dispose();
                 System.out.println("Is touched");
-            } else System.out.println("nothing touched");
+            } else {
+                System.out.println("nothing touched");
+                game.setScreen(new GameScreen(game));
+                dispose();
+            }
         }
 
     }
