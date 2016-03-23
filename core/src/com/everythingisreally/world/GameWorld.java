@@ -7,6 +7,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.everythingisreally.objects.BigStar;
 import com.everythingisreally.objects.SmallStar;
+import com.everythingisreally.objects.Star;
 import com.everythingisreally.objects.Whale;
 import com.everythingisreally.screens.MainMenuScreen;
 
@@ -101,7 +102,6 @@ public class GameWorld {
             } else if(whaleDirection == LEFT) {
                 whaleDirection = RIGHT;
             }
-
             if(openingPause){
                 openingPause = false;
             }
@@ -128,35 +128,16 @@ public class GameWorld {
             }
         }
 
-        // Falling Stars, and Collision Checking TODO: PUT THESE INTO SEPERATE STAR UPDATING FUNCTION
-        Iterator<SmallStar> smallStarIter = smallStars.iterator();
-        while(smallStarIter.hasNext()){
-            SmallStar smallStar = smallStarIter.next();
-            smallStar.y -= 250 * Gdx.graphics.getDeltaTime();
-            if(smallStar.y + 19 < 0) smallStarIter.remove();
-            if(smallStar.overlaps(whale) && alive) { // PUT alive variable in Whale object?
-                //plopSound.play(); // More annoying than good
-                smallStarIter.remove();
-                whale.addScore(1); //1
-                whale.addHealth(smallStar.getNutrients()); // Calories/Nutrients are the health
-            }
-        }
-        Iterator<BigStar> bigStarIter = bigStars.iterator();
-        while(bigStarIter.hasNext()){
-            BigStar bigStar =  bigStarIter.next();
-            bigStar.y -= 250 * Gdx.graphics.getDeltaTime();
-            if(bigStar.y + 29 < 0) bigStarIter.remove();
-            if(bigStar.overlaps(whale) && alive) {
-                //plopSound.play();
-                bigStarIter.remove();
-                whale.addScore(5); //5
-                whale.addHealth(bigStar.getNutrients()); //5
-            }
-        }
-
-
+        // Falling Stars, and Collision Checking
+        moveSmallStars(smallStars);
+        moveBigStars(bigStars);
     }
 
+
+    /**
+     * Spawn a few stars and add to the Array of Stars
+     * Then Check for the Collision as they Move
+     */
     private void spawnSmallStar() {
         SmallStar smallStar = new SmallStar();
         smallStars.add(smallStar);
@@ -169,6 +150,41 @@ public class GameWorld {
         lastBigStarTime = TimeUtils.nanoTime();
     }
 
+    private void moveSmallStars(Array<SmallStar> stars){
+        Iterator<SmallStar> starIter = stars.iterator();
+        while(starIter.hasNext()){
+            SmallStar star = starIter.next();
+            star.y -= 250 * Gdx.graphics.getDeltaTime();
+            if(star.y + star.getHeight() < 0) starIter.remove();
+            if(star.overlaps(whale) && alive) { // is it necessary to keep alive boolean?
+                // play sound
+                starIter.remove();
+                whale.addScore((int) star.getNutrients());
+                whale.addHealth(star.getNutrients());
+            }
+        }
+    }
+
+    private void moveBigStars(Array<BigStar> stars){
+        Iterator<BigStar> starIter = stars.iterator();
+        while(starIter.hasNext()){
+            BigStar star = starIter.next();
+            star.y -= 250 * Gdx.graphics.getDeltaTime();
+            if(star.y + star.getHeight() < 0) starIter.remove();
+            if(star.overlaps(whale) && alive) { // is it necessary to keep alive boolean?
+                // play sound
+                starIter.remove();
+                whale.addScore((int) star.getNutrients());
+                whale.addHealth(star.getNutrients());
+            }
+        }
+    }
+    /**
+     * These functions are for the GameRenderer, to get the sprites
+     * and for checking some boolean logics
+     * and for the GameScreen for disposing the textures
+     * @return
+     */
     public Whale getWhale(){
         return whale;
     }
@@ -185,7 +201,7 @@ public class GameWorld {
         return alive;
     }
 
-    public boolean isLongDead() {
+    public boolean isLongDead() { // Not doing much right now...
         return longDead;
     }
 }
