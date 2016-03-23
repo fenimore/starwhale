@@ -12,6 +12,7 @@
 - colors?
 - clusters?
 - civilizations?
+- Change stars from Rectangle object to circle?
 
 ### Create Assets Loader/Helper
 

@@ -7,18 +7,14 @@ import com.badlogic.gdx.math.Rectangle;
 /**
  * Created by fen on 2/24/16.
  */
-// TODO: Add
 public class Whale extends Rectangle {
 
     // Looks like a whale, no?
     private Texture whaleImage;
 
     // Health and Score
-    // The Whale Class takes care of this
     private double Health = 100;
     private int Score = 0;
-
-
     private double Drain = 0.2;
 
     // each Whale Image is incremented from the original, either
@@ -31,64 +27,32 @@ public class Whale extends Rectangle {
     private double whale_w_3 = 32 * 1.4;
     private double whale_w_4 = 32 * 1.7;
 
-    public Whale(float x, float y, float width, float height) {
+    public Whale(float x, float y, float width, float height) { // Constructor!!!!
         super(x, y, width, height);
-        //this.whaleImage = whaleImage;
+        // Should automatically determine starting size/position
     }
 
-
-    public int getHealth() {
-        return ((int) Math.round(Health));
-    }
-
-    public void setHealth(double health) {
-        Health = health;
-    }
-
-    // Add health by multiples of 1
-    // e.g. addHealth(5) adds 5 health points
-    public void addHealth(double x){
-        if(Health + (1* x) <= 100){
+    public void addHealth(double x){ // Heal by Stars
+        if(Health + (1* x) <= 100){ // why by multiples of one? What?
             Health += 1 * x;
         } else Health = 100;
     }
 
-    public void drainHealth(){
+    public void drainHealth(){ // Drain Health
         if((Health -= Drain) <= 0){
-            //whaleImage.dispose();
-            Health = 0;
-            // Game Over?
-            //toast.show();
-
+            Health = 0; // Game Over!!!!
         } else Health -= Drain; // TODO: Find the sweet Spot
     }
 
-    public Texture getWhaleImage() {
-        return whaleImage;
+    public void addScore(int x) { // Add score
+        Score += 1 * x; // why is it a multiplier by one? What was I thinking?
     }
 
-    public void setWhaleImage(Texture whaleImage) {
-        this.whaleImage = whaleImage;
+    public void perish(){ // die of hunger make rectangle non-existant
+        this.setWidth(0);
+        this.setHeight(0);
     }
 
-    // Texture
-    public int getScore() {
-        return Score;
-    }
-
-    public void addScore(int x) {
-        Score += 1 * x;
-    }
-
-    public double getDrain() {
-        return Drain;
-    }
-
-    public void setDrain(double drain) {
-        Drain = drain;
-    }
-
-    // There must be a better way to do this!
     // TODO: BE SMARTER!
     public void refreshWhale(){
         if(Score < 50) {
@@ -111,10 +75,41 @@ public class Whale extends Rectangle {
         // RIGHT now, 200 is the top level...
     }
 
-    public void perish(){
-        // die of hunger
-        this.setWidth(0);
-        this.setHeight(0);
+    /**
+     * Getters and setters
+     *
+     */
+    public Texture getWhaleImage() {
+        return whaleImage;
     }
+
+    public void setWhaleImage(Texture whaleImage) {
+        this.whaleImage = whaleImage;
+    }
+
+    // Texture
+    public int getScore() {
+        return Score;
+    }
+
+
+
+    public double getDrain() {
+        return Drain;
+    }
+
+    public void setDrain(double drain) {
+        Drain = drain;
+    }
+
+
+    public int getHealth() {
+        return ((int) Math.round(Health));
+    }
+
+    public void setHealth(double health) {
+        Health = health;
+    }
+
 
 }

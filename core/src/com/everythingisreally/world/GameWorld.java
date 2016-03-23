@@ -26,43 +26,38 @@ public class GameWorld {
     private long lastBigStarTime;
     private long lastDrainTime;
     private long lastStarTime;
+
     // Overall Time played
     private long overallTime;
     private long firstTime;
-    private boolean openingPause; // This is a peculiar check
     private long timeOfDeath; // Reset Game after a bity
 
-
+    // Checking Booleans
     private boolean longDead = false;
-
-
     private boolean alive;
+    private boolean openingPause; // This is a peculiar check
+
 
     // Whale Movement
     // TODO: Move this into Whale OBject
     private int RIGHT = 0;
     private int LEFT = 1;
     private int whaleDirection = 0; //lets say 0 is right?
-    private float x_start = 800 / 2 - 32 / 2; // x origin
-    private float y_start = 70; // y origin
-    private float w_start = 32; // width
-    private float h_start = 64; // height
 
     public GameWorld(Whale whale) {
 
-        this.whale = whale;
+        this.whale = whale; // Our hero
 
-        firstTime = TimeUtils.millis();
-        openingPause = true;
-        alive = true;
+        firstTime = TimeUtils.millis(); // Game Starts
 
-        whale.drainHealth();
-        lastDrainTime = TimeUtils.nanoTime();
+        openingPause = true; // We pause movement for one second
+        alive = true; // Whale is alive
 
+        whale.drainHealth(); // Immediately start draining
+        lastDrainTime = TimeUtils.nanoTime(); // start the timer till next drain
 
-        bigStars = new Array<BigStar>();
-        smallStars = new Array<SmallStar>();
-
+        bigStars = new Array<BigStar>(); // The arrays of game objects
+        smallStars = new Array<SmallStar>(); // Deal with them as arrays
     }
 
 
@@ -70,11 +65,10 @@ public class GameWorld {
         //Gdx.app.log("GameWorld", "update");
 
         // 1000 milliseconds in a second
-        // Fly straight until clicked
         if (openingPause){
             overallTime = TimeUtils.millis() -firstTime;
             System.out.println(Long.toString(overallTime));
-            if (overallTime > 1500) openingPause = false;
+            if (overallTime > 1500) openingPause = false; // Fly straight until 1.5 seconds
         }
 
         // Update Whale size
@@ -150,7 +144,7 @@ public class GameWorld {
         lastBigStarTime = TimeUtils.nanoTime();
     }
 
-    private void moveSmallStars(Array<SmallStar> stars){
+    private void moveSmallStars(Array<SmallStar> stars){ // Can I get it to take in any stars?
         Iterator<SmallStar> starIter = stars.iterator();
         while(starIter.hasNext()){
             SmallStar star = starIter.next();
@@ -183,7 +177,7 @@ public class GameWorld {
      * These functions are for the GameRenderer, to get the sprites
      * and for checking some boolean logics
      * and for the GameScreen for disposing the textures
-     * @return
+     * @return the GameWorld important informationy
      */
     public Whale getWhale(){
         return whale;

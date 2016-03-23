@@ -3,8 +3,6 @@ package com.everythingisreally.objects;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Circle;
-import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.utils.Array;
 
 /**
  * Created by fen on 3/22/16.
@@ -33,6 +31,10 @@ public class Galaxy extends Circle {
         return _spriteCorner;
     }
 
+    public int[] getSpriteCorner() {
+        return spriteCorner;
+    }
+
     public boolean is_touched(float xx,float yy) {
         float x = this.x;
         float y = this.y;
@@ -40,6 +42,7 @@ public class Galaxy extends Circle {
         float inverted_y = 1150 - yy; // The input listener listens from the top corner, 1150 is the height of the screen
         return (xx - x) * (xx - x) + (inverted_y - y) * (inverted_y - y) < radius * radius;// (x - center_x)^2 + (y - center_y)^2 < radius^2
     }
+
 
     public Texture getGalaxyImage() {
         return galaxyImage;
@@ -49,9 +52,7 @@ public class Galaxy extends Circle {
         this.galaxyImage = galaxyImage;
     }
 
-    public int[] getSpriteCorner() {
-        return spriteCorner;
-    }
+
 
 
 }
