@@ -1,25 +1,12 @@
 package com.everythingisreally.screens;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.TimeUtils;
 import com.everythingisreally.StarWhale;
-import com.everythingisreally.objects.BigStar;
-import com.everythingisreally.objects.SmallStar;
+import com.everythingisreally.objects.stars.BigStar;
+import com.everythingisreally.objects.stars.SmallStar;
 import com.everythingisreally.objects.Whale;
 import com.everythingisreally.world.GameRenderer;
 import com.everythingisreally.world.GameWorld;
-
-import java.util.Iterator;
 
 /**
  * Created by fen on 2/24/16.

@@ -1,17 +1,13 @@
 package com.everythingisreally.world;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
-import com.everythingisreally.objects.BigStar;
-import com.everythingisreally.objects.SmallStar;
-import com.everythingisreally.objects.Star;
+import com.everythingisreally.objects.stars.BigStar;
+import com.everythingisreally.objects.stars.SmallStar;
 import com.everythingisreally.objects.Whale;
-import com.everythingisreally.screens.MainMenuScreen;
 
-import java.sql.Time;
 import java.util.Iterator;
 
 /**

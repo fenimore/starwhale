@@ -1,4 +1,4 @@
-package com.everythingisreally.objects;
+package com.everythingisreally.objects.stars;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -7,7 +7,7 @@ import com.badlogic.gdx.math.MathUtils;
 /**
  * Created by fen on 3/21/16.
  */
-public class BigStar extends Star {
+public class BigStar extends com.everythingisreally.objects.stars.Star {
     private int w = 29;
     private int h = 29;
     private int x_coord = MathUtils.random(0, 800); // what is the lenght?
