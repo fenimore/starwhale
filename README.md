@@ -25,7 +25,7 @@
 ### Start Page
 
 - universe select
-- GameScreen - 
+- GameScreen
 
 ### Make Pretty
 -  https://github.com/libgdx/libgdx/wiki/2D-Animation

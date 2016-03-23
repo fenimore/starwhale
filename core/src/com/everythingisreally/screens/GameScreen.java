@@ -46,6 +46,7 @@ public class GameScreen implements Screen {
         this.game = gam;
         whale = new Whale(x_start, y_start, w_start, h_start); // put this in default constructor
 
+        // World takes the Whale as argument
         world = new GameWorld(whale); // initialize world
         renderer = new GameRenderer(world); // initialize renderer
     }

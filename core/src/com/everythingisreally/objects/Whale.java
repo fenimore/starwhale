@@ -18,6 +18,9 @@ public class Whale extends Rectangle {
     private double Health = 100;
     private int Score = 0;
 
+
+    private double Drain = 0.2;
+
     // each Whale Image is incremented from the original, either
     // 20% increase, 40, 70, etcs
     private Texture whale_1 = new Texture(Gdx.files.internal("star_whale.png"));
@@ -51,13 +54,13 @@ public class Whale extends Rectangle {
     }
 
     public void drainHealth(){
-        if((Health -= .2) <= 0){
+        if((Health -= Drain) <= 0){
             //whaleImage.dispose();
             Health = 0;
             // Game Over?
             //toast.show();
 
-        } else Health -= .2; // TODO: Find the sweet Spot
+        } else Health -= Drain; // TODO: Find the sweet Spot
     }
 
     public Texture getWhaleImage() {
@@ -75,6 +78,14 @@ public class Whale extends Rectangle {
 
     public void addScore(int x) {
         Score += 1 * x;
+    }
+
+    public double getDrain() {
+        return Drain;
+    }
+
+    public void setDrain(double drain) {
+        Drain = drain;
     }
 
     // There must be a better way to do this!
