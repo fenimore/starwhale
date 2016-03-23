@@ -73,8 +73,8 @@ public class GameWorld {
 
         // Check Whale size
         whale.refreshWhale();
-        spawnSmallStar();
-        spawnBigStar();
+        //spawnSmallStar();
+        //spawnBigStar();
 
         if (whale.getHealth() <= 0) {
             alive = false;
@@ -110,17 +110,17 @@ public class GameWorld {
         if(whale.x > 800 - 32) whale.x = 800 - 32;
 
         // check if we need to create a new star TODO: Find sweet Spot
-        //if(TimeUtils.millis() - TimeUtils.nanosToMillis(lastStarTime) > 50000000) spawnSmallStar();
+        //if(TimeUtils.millis() - TimeUtils.nanosToMillis(lastStarTime) > 10000) spawnSmallStar();
+        if(TimeUtils.nanoTime() - lastStarTime > 99919990) spawnSmallStar();
         // Spawn new big star at interval
-        // THIS IS MOSTLY BROKEN TODO: Make this work better...
-        if(TimeUtils.millis() -
-                TimeUtils.nanosToMillis(lastBigStarTime) > 999999990){
+        if(TimeUtils.nanoTime() - lastBigStarTime > 1999999990){
             // flip a coin
-            int toss = MathUtils.random(0, 1000);
+            int toss = MathUtils.random(0, 100);// this is the probabilty
             if(toss == 0){
-                spawnSmallStar();
+                spawnBigStar();
                 lastBigStarTime = TimeUtils.nanoTime();
             }
+            //spawnBigStar();
         }
 
 
