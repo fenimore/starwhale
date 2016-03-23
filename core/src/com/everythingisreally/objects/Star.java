@@ -7,7 +7,7 @@ import com.badlogic.gdx.math.Rectangle;
 /**
  * Created by fen on 3/21/16.
  */
-public class Star extends Rectangle {
+public class Star extends Rectangle { // Circles have no collision system build in
     // Looks like a whale, no?
     private Texture starImage;
     // How much it heals

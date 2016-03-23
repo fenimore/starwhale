@@ -105,6 +105,8 @@ public class Whale extends Rectangle {
         if(Score >= 200) {
             setWhaleImage(whale_4);
             this.setWidth(((float) whale_w_4));
+            // Let Drain be a bit higher
+            Drain = 0.29;
         }
         // RIGHT now, 200 is the top level...
     }
