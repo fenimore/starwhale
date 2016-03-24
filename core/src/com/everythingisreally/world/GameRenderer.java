@@ -87,8 +87,8 @@ public class GameRenderer {
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
 
         // Does this lead to performance issues?y
-        shapeRenderer.setColor(135, 206, 235, 1);
-        shapeRenderer.rect(20, 1075, gameWorld.getWhale().getHealth() * 3, 20); // max health is 300 px
+        //shapeRenderer.setColor(135, 206, 235, 1);
+        //shapeRenderer.rect(20, 1075, gameWorld.getWhale().getHealth() * 3, 20); // max health is 300 px
 
         shapeRenderer.end();
 

@@ -23,6 +23,11 @@ public class GameWorld {
     private long lastDrainTime;
     private long lastStarTime;
 
+    // in case they need modifying.. these concern Stars:
+    private long TIMER_SMALL = 99919990; // nano seconds
+    private long TIMER_BIG = 1999999990; // nano seconds
+    private int PROBABILITY = 100;      // one out of ... for big stars
+
     // Overall Time played
     private long overallTime;
     private long firstTime;
@@ -121,6 +126,17 @@ public class GameWorld {
         // Falling Stars, and Collision Checking
         moveSmallStars(smallStars);
         moveBigStars(bigStars);
+
+        bonusPoints(whale.getScore());
+    }
+
+    private void bonusPoints(int score) {
+        if(score == 200) scoreBig(); PROBABILITY = 50; TIMER_BIG = 1499999990;
+        if(score == 100) scoreBig();
+        whale.addScore(1); // without addScore 1, the prize will repeat every frame
+                           // thus multiplying the bonus for ever frame you remain
+                           // with just that amount... this is actually quite interesting though
+                           // so I'm going to leave it in
     }
 
 
@@ -168,6 +184,17 @@ public class GameWorld {
                 whale.addHealth(star.getNutrients());
             }
         }
+    }
+
+    private void scoreBig(){ // release a bunch of starsy
+        for(int i=1; i<3; i++){
+            BigStar bigStar = new BigStar();
+            bigStars.add(bigStar);
+        }
+        lastBigStarTime = TimeUtils.nanoTime();
+        if(whale.getHealth() < 70) whale.addHealth(30);
+        if(whale.getHealth() > 70) whale.setHealth(100);
+
     }
     /**
      * These functions are for the GameRenderer, to get the sprites
