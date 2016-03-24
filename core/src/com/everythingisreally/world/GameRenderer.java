@@ -1,6 +1,7 @@
 package com.everythingisreally.world;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -81,7 +82,9 @@ public class GameRenderer {
 
 
         // Draw Score
-        font100.setColor(1.0f, 1.0f, 1.0f, 1.0f);
+        if(gameWorld.getWhale().getScore() > 190) {font100.setColor(Color.MAGENTA);}
+        else if(gameWorld.getWhale().getScore() > 90) {font100.setColor(Color.SALMON);}
+
         font100.draw(batch, starScore, 600, 1075);
         // Draw Health Digits:
         healthBitmap.setColor(1.0f, 1.0f, 1.0f, 1.0f);
@@ -100,8 +103,16 @@ public class GameRenderer {
 
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
 
-        // Does this lead to performance issues?y
-        shapeRenderer.setColor(135, 206, 235, 1);
+        if(gameWorld.getWhale().getHealth() > 80) {
+            shapeRenderer.setColor(Color.NAVY);
+        } else if(gameWorld.getWhale().getHealth() > 50){
+            shapeRenderer.setColor(Color.FOREST);
+        }else if(gameWorld.getWhale().getHealth() > 20){
+            shapeRenderer.setColor(Color.CORAL);
+        }else if(gameWorld.getWhale().getHealth() > 0){
+            shapeRenderer.setColor(Color.FIREBRICK);
+        }
+
         shapeRenderer.rect(20, 1075, gameWorld.getWhale().getHealth() * 3, 20); // max health is 300 px
 
         shapeRenderer.end();
