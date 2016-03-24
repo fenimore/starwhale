@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.everythingisreally.objects.stars.BigStar;
 import com.everythingisreally.objects.stars.SmallStar;
@@ -26,6 +27,10 @@ public class GameRenderer {
     private String whaleHealth;
     BitmapFont healthBitmap;
 
+    private FreeTypeFontGenerator generator;
+    private FreeTypeFontGenerator.FreeTypeFontParameter parameter;
+    private BitmapFont font100;
+
     public GameRenderer(GameWorld world){
         gameWorld = world;
         camera = new OrthographicCamera();
@@ -33,10 +38,17 @@ public class GameRenderer {
         batch = new SpriteBatch();
 
         // TODO: Health Bar
-        starScore = "score: 0";
+        starScore = "0";
         scoreBitmap = new BitmapFont();
         whaleHealth = "Health: 100";
         healthBitmap = new BitmapFont();
+
+        //https://github.com/libgdx/libgdx/wiki/Gdx-freetype
+        generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/Inconsolata.otf"));
+        parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        parameter.size = 100;
+        font100 = generator.generateFont(parameter); // font size 50 something
+        generator.dispose(); // don't forget to dispose to avoid memory leaks!
 
     }
     public void render(){
@@ -67,9 +79,10 @@ public class GameRenderer {
         }
 
 
-        // Draw Score and Score TODO: Draw bar for health
-        scoreBitmap.setColor(1.0f, 1.0f, 1.0f, 1.0f);
-        scoreBitmap.draw(batch, starScore, 25, 1000);
+        // Draw Score
+        font100.setColor(1.0f, 1.0f, 1.0f, 1.0f);
+        font100.draw(batch, starScore, 600, 1075);
+        // Draw Health Digits:
         healthBitmap.setColor(1.0f, 1.0f, 1.0f, 1.0f);
         healthBitmap.draw(batch, whaleHealth, 25, 1030);
 
@@ -87,14 +100,14 @@ public class GameRenderer {
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
 
         // Does this lead to performance issues?y
-        //shapeRenderer.setColor(135, 206, 235, 1);
-        //shapeRenderer.rect(20, 1075, gameWorld.getWhale().getHealth() * 3, 20); // max health is 300 px
+        shapeRenderer.setColor(135, 206, 235, 1);
+        shapeRenderer.rect(20, 1075, gameWorld.getWhale().getHealth() * 3, 20); // max health is 300 px
 
         shapeRenderer.end();
 
         //Update Variables which populate Score and Health Bitmap
         whaleHealth = "Health " + gameWorld.getWhale().getHealth();
-        starScore = "Score: " + gameWorld.getWhale().getScore();
+        starScore = String.valueOf(gameWorld.getWhale().getScore());
     }
 
     public SpriteBatch getBatch() {

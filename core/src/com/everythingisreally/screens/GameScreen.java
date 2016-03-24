@@ -1,5 +1,6 @@
 package com.everythingisreally.screens;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.everythingisreally.StarWhale;
 import com.everythingisreally.objects.stars.BigStar;
@@ -35,7 +36,7 @@ public class GameScreen implements Screen {
         whale = new Whale(x_start, y_start, w_start, h_start);
 
         // World takes the Whale as argument
-        world = new GameWorld(whale); // initialize world
+        world = new GameWorld(whale, game); // initialize world
         renderer = new GameRenderer(world); // initialize renderer
     }
 
@@ -65,6 +66,9 @@ public class GameScreen implements Screen {
 
     @Override
     public void pause() {
+        if(Gdx.input.justTouched()){
+            resume();
+        }
 
     }
 

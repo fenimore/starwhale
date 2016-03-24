@@ -1,19 +1,26 @@
 package com.everythingisreally.world;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
+import com.everythingisreally.StarWhale;
 import com.everythingisreally.objects.stars.BigStar;
 import com.everythingisreally.objects.stars.SmallStar;
 import com.everythingisreally.objects.Whale;
+import com.everythingisreally.screens.MainMenuScreen;
 
 import java.util.Iterator;
+
+import sun.applet.Main;
 
 /**
  * Created by fen on 3/22/16.
  */
 public class GameWorld {
+    private StarWhale game;
+
     private Whale whale;
     private Array<BigStar> bigStars;
     private Array<SmallStar> smallStars;
@@ -45,10 +52,10 @@ public class GameWorld {
     private int LEFT = 1;
     private int whaleDirection = 0; //lets say 0 is right?
 
-    public GameWorld(Whale whale) {
+    public GameWorld(Whale whale, StarWhale gam) {
 
         this.whale = whale; // Our hero
-
+        this.game = gam;
         firstTime = TimeUtils.millis(); // Game Starts
 
         openingPause = true; // We pause movement for one second
@@ -99,6 +106,17 @@ public class GameWorld {
             }
             if(openingPause){
                 openingPause = false;
+            }
+            if(!alive){ http://mindprod.com/jgloss/sleep.html
+                try {
+                    Thread.sleep(1000);                 //1000 milliseconds is one second.
+                } catch(InterruptedException ex) {
+                    Thread.currentThread().interrupt();
+                }
+                Screen scr = game.getScreen();
+                scr.hide();
+                scr.dispose();
+                game.setScreen(new MainMenuScreen(game));
             }
         }
 
