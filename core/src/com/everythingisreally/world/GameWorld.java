@@ -133,7 +133,7 @@ public class GameWorld {
     private void bonusPoints(int score) {
         if(score == 200) scoreBig(); PROBABILITY = 50; TIMER_BIG = 1499999990;
         if(score == 100) scoreBig();
-        whale.addScore(1); // without addScore 1, the prize will repeat every frame
+        //whale.addScore(1); // without addScore 1, the prize will repeat every frame
                            // thus multiplying the bonus for ever frame you remain
                            // with just that amount... this is actually quite interesting though
                            // so I'm going to leave it in
