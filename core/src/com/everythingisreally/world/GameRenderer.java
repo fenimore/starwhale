@@ -71,7 +71,8 @@ public class GameRenderer {
         // Check Whale Status and Draw Whale
         if (!gameWorld.isAlive()){
             gameWorld.getWhale().getWhaleImage().dispose(); // access whale through GameWorld Class
-            scoreBitmap.draw(batch, "You've Died", 85, 400);
+            scoreBitmap.draw(batch, "Game Over, Click to Restart", 85, 400);
+            font100.draw(batch, "Famished, you've disappeared", 100, 500);
             gameWorld.getWhale().perish();
         } else if (gameWorld.isAlive()) {
             batch.draw(gameWorld.getWhale().getWhaleImage(),
