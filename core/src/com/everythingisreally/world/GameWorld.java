@@ -74,6 +74,31 @@ public class GameWorld {
         smallStars = new Array<SmallStar>(); // Deal with them as arrays
 
         //explosions = new Array<Circle>();
+
+        //https://truongtx.me/2013/04/27/simple-swipe-gesture-detection-for-libgdx
+        Gdx.input.setInputProcessor(new SimpleDirectionGestureDetector(new SimpleDirectionGestureDetector.DirectionListener() {
+            @Override
+            public void onUp() {
+                // TODO Auto-generated method stub
+                VELOCITY += 20;
+            }
+
+            @Override
+            public void onRight() {
+                whaleDirection = LEFT; // should we take these out?
+            }
+
+            @Override
+            public void onLeft() {
+                whaleDirection = RIGHT;
+            }
+
+            @Override
+            public void onDown() {
+                // TODO Auto-generated method stub
+                VELOCITY -= 20;
+            }
+        }));
     }
 
 
@@ -123,29 +148,6 @@ public class GameWorld {
                 game.setScreen(new MainMenuScreen(game));
             }
         }
-        //https://truongtx.me/2013/04/27/simple-swipe-gesture-detection-for-libgdx
-        Gdx.input.setInputProcessor(new SimpleDirectionGestureDetector(new SimpleDirectionGestureDetector.DirectionListener() {
-            @Override
-            public void onUp() {
-                // TODO Auto-generated method stub
-            }
-
-            @Override
-            public void onRight() {
-                whaleDirection = RIGHT;
-            }
-
-            @Override
-            public void onLeft() {
-                whaleDirection = LEFT;
-            }
-
-            @Override
-            public void onDown() {
-                // TODO Auto-generated method stub
-
-            }
-        }));
 
         // Whale Movement
         if(!openingPause){
