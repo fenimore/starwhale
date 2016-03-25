@@ -2,6 +2,7 @@ package com.everythingisreally.world;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
@@ -24,6 +25,9 @@ public class GameWorld {
     private Whale whale;
     private Array<BigStar> bigStars;
     private Array<SmallStar> smallStars;
+
+    // Lame
+    //private Array<Circle> explosions;
 
     // Intervals for Star spawn and Drain health
     private long lastBigStarTime;
@@ -66,6 +70,8 @@ public class GameWorld {
 
         bigStars = new Array<BigStar>(); // The arrays of game objects
         smallStars = new Array<SmallStar>(); // Deal with them as arrays
+
+        //explosions = new Array<Circle>();
     }
 
 
@@ -144,6 +150,7 @@ public class GameWorld {
         // Falling Stars, and Collision Checking
         moveSmallStars(smallStars);
         moveBigStars(bigStars);
+        //removeExplosions(explosions);
 
         bonusPoints(whale.getScore());
     }
@@ -183,6 +190,8 @@ public class GameWorld {
             if(star.overlaps(whale) && alive) { // is it necessary to keep alive boolean?
                 // play sound
                 starIter.remove();
+                //Circle explosion = new Circle(star.x, star.y, 11);
+                //explosions.add(explosion);
                 whale.addScore((int) star.getNutrients());
                 whale.addHealth(star.getNutrients());
             }
@@ -203,6 +212,20 @@ public class GameWorld {
             }
         }
     }
+
+    /**
+     *     private void removeExplosions(Array<Circle> exps){
+     *     Iterator<Circle> _explosions = exps.iterator();
+     *     while(_explosions.hasNext()){
+     *     Circle explosion = _explosions.next();
+     *     explosion.y -= 250 * Gdx.graphics.getDeltaTime();
+     *     if(explosion.y < 0) _explosions.remove();
+     *     }
+     *     }
+     * @param
+     */
+
+
 
     private void scoreBig(){ // release a bunch of starsy
         for(int i=1; i<3; i++){
@@ -231,6 +254,8 @@ public class GameWorld {
     public Array<BigStar> getBigStars() {
         return bigStars;
     }
+
+    //public Array<Circle> getExplosions() { return explosions; }
 
     public boolean isAlive() {
         return alive;

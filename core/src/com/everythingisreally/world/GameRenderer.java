@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Circle;
 import com.everythingisreally.objects.stars.BigStar;
 import com.everythingisreally.objects.stars.SmallStar;
 
@@ -73,22 +74,12 @@ public class GameRenderer {
         if (!gameWorld.isAlive()){
             gameWorld.getWhale().getWhaleImage().dispose(); // access whale through GameWorld Class
             scoreBitmap.draw(batch, "Game Over, Click to Restart", 85, 400);
-            font100.draw(batch, "Famished, you've disappeared", 100, 500);
+            font100.draw(batch, "Famished", 100, 500);
             gameWorld.getWhale().perish();
         } else if (gameWorld.isAlive()) {
             batch.draw(gameWorld.getWhale().getWhaleImage(),
                     gameWorld.getWhale().x, gameWorld.getWhale().y);
         }
-
-
-        // Draw Score
-        if(gameWorld.getWhale().getScore() > 190) {font100.setColor(Color.MAGENTA);}
-        else if(gameWorld.getWhale().getScore() > 90) {font100.setColor(Color.SALMON);}
-
-        font100.draw(batch, starScore, 600, 1075);
-        // Draw Health Digits:
-        healthBitmap.setColor(1.0f, 1.0f, 1.0f, 1.0f);
-        healthBitmap.draw(batch, whaleHealth, 25, 1030);
 
         // Draw Stars
         for(SmallStar smallStar: gameWorld.getSmallStars()) {
@@ -98,11 +89,17 @@ public class GameRenderer {
             batch.draw(bigStar.getStarImage(), bigStar.x, bigStar.y);
         }
 
+        // Draw Score
+        if(gameWorld.getWhale().getScore() > 190) {font100.setColor(Color.MAGENTA);}
+        else if(gameWorld.getWhale().getScore() > 90) {font100.setColor(Color.SALMON);}
+        font100.draw(batch, starScore, 600, 1075);
+        // Draw Health Digits:
+        healthBitmap.setColor(1.0f, 1.0f, 1.0f, 1.0f);
+        healthBitmap.draw(batch, whaleHealth, 25, 1030);
 
         batch.end();
 
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-
         if(gameWorld.getWhale().getHealth() > 80) {
             shapeRenderer.setColor(Color.NAVY);
         } else if(gameWorld.getWhale().getHealth() > 50){
@@ -112,10 +109,17 @@ public class GameRenderer {
         }else if(gameWorld.getWhale().getHealth() > 0){
             shapeRenderer.setColor(Color.FIREBRICK);
         }
-
         shapeRenderer.rect(20, 1075, gameWorld.getWhale().getHealth() * 3, 20); // max health is 300 px
-
         shapeRenderer.end();
+
+        //shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+        //shapeRenderer.setColor(Color.SALMON);
+        // Draw Explosions!!!
+        //for(Circle explosion: gameWorld.getExplosions()) {
+        //    //shapeRenderer.
+        //    shapeRenderer.circle(explosion.x, explosion.y, explosion.radius);
+        //}
+        //shapeRenderer.end();
 
         //Update Variables which populate Score and Health Bitmap
         whaleHealth = "Health " + gameWorld.getWhale().getHealth();
