@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.everythingisreally.StarWhale;
+import com.everythingisreally.helpers.SimpleDirectionGestureDetector;
 import com.everythingisreally.objects.stars.BigStar;
 import com.everythingisreally.objects.stars.SmallStar;
 import com.everythingisreally.objects.Whale;
@@ -39,13 +40,14 @@ public class GameWorld {
     private long TIMER_BIG = 1999999990; // nano seconds
     private int PROBABILITY = 100;      // one out of ... for big stars
 
+    private int VELOCITY = 250;
+
     // Overall Time played
     private long overallTime;
     private long firstTime;
     private long timeOfDeath; // Reset Game after a bity
 
     // Checking Booleans
-    private boolean longDead = false;
     private boolean alive;
     private boolean openingPause; // This is a peculiar check
 
@@ -92,10 +94,6 @@ public class GameWorld {
             timeOfDeath = TimeUtils.millis();
             alive = false;
         }
-        // For reseting game after Death
-        //if (!alive && TimeUtils.millis() - timeOfDeath > 4000){
-        //    longDead = true;
-        //}
 
         // Drain Health at interval
         if(TimeUtils.nanoTime() - lastDrainTime > 100500000){
@@ -125,6 +123,29 @@ public class GameWorld {
                 game.setScreen(new MainMenuScreen(game));
             }
         }
+        //https://truongtx.me/2013/04/27/simple-swipe-gesture-detection-for-libgdx
+        Gdx.input.setInputProcessor(new SimpleDirectionGestureDetector(new SimpleDirectionGestureDetector.DirectionListener() {
+            @Override
+            public void onUp() {
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void onRight() {
+                whaleDirection = RIGHT;
+            }
+
+            @Override
+            public void onLeft() {
+                whaleDirection = LEFT;
+            }
+
+            @Override
+            public void onDown() {
+                // TODO Auto-generated method stub
+
+            }
+        }));
 
         // Whale Movement
         if(!openingPause){
@@ -181,11 +202,14 @@ public class GameWorld {
         lastBigStarTime = TimeUtils.nanoTime();
     }
 
+    /*
+        MOVEMENT and COLLISION***********
+     */
     private void moveSmallStars(Array<SmallStar> stars){ // Can I get it to take in any stars?
         Iterator<SmallStar> starIter = stars.iterator();
         while(starIter.hasNext()){
             SmallStar star = starIter.next();
-            star.y -= 250 * Gdx.graphics.getDeltaTime();
+            star.y -= VELOCITY * Gdx.graphics.getDeltaTime(); // VELOCITY is 250
             if(star.y + star.getHeight() < 0) starIter.remove();
             if(star.overlaps(whale) && alive) { // is it necessary to keep alive boolean?
                 // play sound
@@ -202,7 +226,7 @@ public class GameWorld {
         Iterator<BigStar> starIter = stars.iterator();
         while(starIter.hasNext()){
             BigStar star = starIter.next();
-            star.y -= 250 * Gdx.graphics.getDeltaTime();
+            star.y -= VELOCITY * Gdx.graphics.getDeltaTime();
             if(star.y + star.getHeight() < 0) starIter.remove();
             if(star.overlaps(whale) && alive) { // is it necessary to keep alive boolean?
                 // play sound
@@ -261,7 +285,4 @@ public class GameWorld {
         return alive;
     }
 
-    public boolean isLongDead() { // Not doing much right now...
-        return longDead;
-    }
 }
