@@ -4,8 +4,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Circle;
@@ -31,6 +33,10 @@ public class GameRenderer {
     private String whaleHealth;
     BitmapFont healthBitmap;
 
+    // Whale Animation
+    private TextureRegion currentWhaleFrame;
+    private float stateTime;
+
     private FreeTypeFontGenerator generator;
     private FreeTypeFontGenerator.FreeTypeFontParameter parameter;
     private BitmapFont font100;
@@ -40,6 +46,8 @@ public class GameRenderer {
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 800, 1150);
         batch = new SpriteBatch();
+
+        stateTime = 0f;
 
         // TODO: Health Bar
         starScore = "0";
@@ -78,7 +86,11 @@ public class GameRenderer {
             font100.draw(batch, "Famished", 100, 500);
             gameWorld.getWhale().perish();
         } else if (gameWorld.isAlive()) {
-            batch.draw(gameWorld.getWhale().getWhaleImage(),
+            // Whale is alive
+            Animation animation = gameWorld.getWhale().render();
+            stateTime += Gdx.graphics.getDeltaTime();
+            currentWhaleFrame = animation.getKeyFrame(stateTime, true);
+            batch.draw(currentWhaleFrame,// gameWorld.getWhale().getWhaleImage(),
                     gameWorld.getWhale().x, gameWorld.getWhale().y);
         }
 

@@ -2,6 +2,9 @@ package com.everythingisreally.objects;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 
 /**
@@ -23,12 +26,27 @@ public class Whale extends Rectangle {
     private Texture whale_2 = new Texture(Gdx.files.internal("star_whale_20.png"));
     private Texture whale_3 = new Texture(Gdx.files.internal("star_whale_40.png"));
     private Texture whale_4 = new Texture(Gdx.files.internal("star_whale_70.png"));
+    private Texture swimSheet = new Texture(Gdx.files.internal("starwhale_sprite_animation.png"));
+    private TextureRegion[] swimFrames = new TextureRegion[2 *1 ];
+    private Animation swimAnimation;
+    private SpriteBatch spriteBatch;
+    private float stateTime;
+    private TextureRegion currentFrame;
+
     private double whale_w_2 = 32 * 1.2;
     private double whale_w_3 = 32 * 1.4;
     private double whale_w_4 = 32 * 1.7;
 
     public Whale(float x, float y, float width, float height) { // Constructor!!!!
         super(x, y, width, height);
+        TextureRegion[][] tmp = TextureRegion.split(swimSheet, swimSheet.getWidth()/2, swimSheet.getHeight());
+        int index = 0;
+        for (int i = 0; i < 2; i++){ // loop through columns
+            swimFrames[index++] = tmp[0][i]; // always one row
+        }
+        this.swimAnimation = new Animation(0.5f, swimFrames);
+        this.spriteBatch = new SpriteBatch();
+        this.stateTime = 0f;
         // Should automatically determine starting size/position
     }
 
@@ -53,6 +71,10 @@ public class Whale extends Rectangle {
         this.setHeight(0);
     }
 
+    public Animation render() {
+        // should I pass back rather the animation?
+        return this.swimAnimation;
+    }
     // TODO: BE SMARTER!
     public void refreshWhale(){
         if(Score < 50) {
