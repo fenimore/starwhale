@@ -4,6 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.MathUtils;
 
+import java.util.Random;
+
 /**
  * Created by fen on 3/21/16.
  */
@@ -13,7 +15,8 @@ public class SmallStar extends Star {
     private int x_coord = MathUtils.random(0, 800); // what is the length??
     private int y_coord = 1150;
     private double nutrients = 1;
-    private Texture image = new Texture(Gdx.files.internal("small_star.png"));
+    private Texture image_1 = new Texture(Gdx.files.internal("small_blur.png"));
+    private Texture image_2 = new Texture(Gdx.files.internal("blur_star_1.png"));
 
     public SmallStar(float x, float y, float width, float height, Texture starImage) {
         super(x, y, width, height, starImage);
@@ -23,7 +26,13 @@ public class SmallStar extends Star {
         this.y = y_coord;
         this.width = w;
         this.height = h;
-        this.setStarImage(image);
+        Random r = new Random();
+        int result = r.nextInt(2);
+        if(result == 0) {
+            this.setStarImage(image_1);
+        } else {
+            this.setStarImage(image_2);
+        }
         this.setNutrients(nutrients);
     }
 
