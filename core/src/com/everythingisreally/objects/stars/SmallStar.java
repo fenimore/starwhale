@@ -36,6 +36,7 @@ public class SmallStar extends Star {
         } else {
             this.setStarImage(image_3);
         }
+
         this.setNutrients(nutrients);
     }
 

@@ -19,7 +19,7 @@ public class Whale extends Rectangle {
 
     // each Whale Image is incremented from the original, either
     // 20% increase, 40, 70, etcs
-    private Texture whale_1 = new Texture(Gdx.files.internal("star_whale.png"));
+    private Texture whale_1 = new Texture(Gdx.files.internal("starwhale_right.png"));
     private Texture whale_2 = new Texture(Gdx.files.internal("star_whale_20.png"));
     private Texture whale_3 = new Texture(Gdx.files.internal("star_whale_40.png"));
     private Texture whale_4 = new Texture(Gdx.files.internal("star_whale_70.png"));

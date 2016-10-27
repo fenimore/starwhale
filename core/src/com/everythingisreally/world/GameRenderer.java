@@ -12,6 +12,8 @@ import com.badlogic.gdx.math.Circle;
 import com.everythingisreally.objects.stars.BigStar;
 import com.everythingisreally.objects.stars.SmallStar;
 
+import java.util.Random;
+
 /**
  * Created by fen on 3/22/16.
  */
@@ -51,7 +53,6 @@ public class GameRenderer {
         parameter.size = 100;
         font100 = generator.generateFont(parameter); // font size 50 something
         generator.dispose(); // don't forget to dispose to avoid memory leaks!
-
     }
     public void render(){
         //Gdx.app.log("GameRenderer", "render");
@@ -81,10 +82,22 @@ public class GameRenderer {
                     gameWorld.getWhale().x, gameWorld.getWhale().y);
         }
 
+
         // Draw Stars
+        Random r = new Random();
+        int result;
         for(SmallStar smallStar: gameWorld.getSmallStars()) {
+            result = r.nextInt(100);
+            if(result == 0) {
+                batch.setColor(255, 255, 250, 0);
+            } else if(result == 1){
+                batch.setColor(250, 240, 255, 0);
+            } else {
+                batch.setColor(Color.WHITE);
+            }
             batch.draw(smallStar.getStarImage(), smallStar.x, smallStar.y);
         }
+        batch.setColor(Color.WHITE);
         for(BigStar bigStar: gameWorld.getBigStars()) {
             batch.draw(bigStar.getStarImage(), bigStar.x, bigStar.y);
         }
