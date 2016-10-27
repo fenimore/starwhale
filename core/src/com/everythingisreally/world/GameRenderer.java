@@ -103,7 +103,8 @@ public class GameRenderer {
             if(result == 0) {
                 batch.setColor(255, 255, 250, 0);
             } else if(result == 1){
-                batch.setColor(250, 240, 255, 0);
+                batch.setColor(Color.RED);
+                //batch.setColor(250, 240, 255, 0);
             } else {
                 batch.setColor(Color.WHITE);
             }

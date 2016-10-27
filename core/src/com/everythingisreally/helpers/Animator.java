@@ -32,7 +32,7 @@ public class Animator implements ApplicationListener {
         for (int i = 0; i < 2; i++){ // loop through columns
             swimFrames[index++] = tmp[1][i]; // always one row
         }
-        swimAnimation = new Animation(0.5f, swimFrames);
+        swimAnimation = new Animation(0.08f, swimFrames);
         spriteBatch = new SpriteBatch();
         stateTime= 0f;
     }
