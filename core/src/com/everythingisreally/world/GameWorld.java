@@ -85,12 +85,14 @@ public class GameWorld {
 
             @Override
             public void onRight() {
-                whaleDirection = LEFT; // should we take these out?
+                whaleDirection = LEFT;
+                // should we take these out?
             }
 
             @Override
             public void onLeft() {
                 whaleDirection = RIGHT;
+
             }
 
             @Override
@@ -130,8 +132,10 @@ public class GameWorld {
         if(Gdx.input.justTouched()) { // Input must be JUST touched, else bugsss
             if(whaleDirection == RIGHT) {
                 whaleDirection = LEFT;
+                whale.setDirection(LEFT);
             } else if(whaleDirection == LEFT) {
                 whaleDirection = RIGHT;
+                whale.setDirection(RIGHT);
             }
             if(openingPause){
                 openingPause = false;

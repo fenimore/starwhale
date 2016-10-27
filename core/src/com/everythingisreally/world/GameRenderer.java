@@ -87,10 +87,12 @@ public class GameRenderer {
             gameWorld.getWhale().perish();
         } else if (gameWorld.isAlive()) {
             // Whale is alive
-            Animation animation = gameWorld.getWhale().render();
-            stateTime += Gdx.graphics.getDeltaTime();
-            currentWhaleFrame = animation.getKeyFrame(stateTime, true);
-            batch.draw(currentWhaleFrame,// gameWorld.getWhale().getWhaleImage(),
+            //Animation animation = gameWorld.getWhale().render();
+            //stateTime += Gdx.graphics.getDeltaTime();
+            //currentWhaleFrame = animation.getKeyFrame(stateTime, true);
+
+
+            batch.draw( gameWorld.getWhale().getWhaleImage(),//currentWhaleFrame,// gameWorld.getWhale().getWhaleImage(),
                     gameWorld.getWhale().x, gameWorld.getWhale().y);
         }
 
@@ -99,6 +101,7 @@ public class GameRenderer {
         Random r = new Random();
         int result;
         for(SmallStar smallStar: gameWorld.getSmallStars()) {
+            // TODO: Set Rate
             result = r.nextInt(100);
             if(result == 0) {
                 batch.setColor(255, 255, 250, 0);
