@@ -3,6 +3,7 @@ package com.everythingisreally.objects;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
@@ -34,11 +35,11 @@ public class Whale extends Rectangle {
     private Texture whale_left = new Texture(Gdx.files.internal("starwhale_left.png"));
     // TODO:
     // Make Animation Tail For Right and Left
-    private Texture swimSheetRight = new Texture(Gdx.files.internal("sw_right_spritesheet.png"));
+    private Texture swimSheetRight = new Texture(Gdx.files.internal("sw_left_spritesheet.png"));
     private TextureRegion[] swimFramesRight = new TextureRegion[2 *1 ];
     private Animation swimAnimationRight;
     // LEFT animation
-    private Texture swimSheetLeft = new Texture(Gdx.files.internal("sw_left_spritesheet.png"));
+    private Texture swimSheetLeft = new Texture(Gdx.files.internal("sw_right_spritesheet.png")); // Broke
     private TextureRegion[] swimFramesLeft = new TextureRegion[2 *1 ];
     private Animation swimAnimationLeft;
 
@@ -53,14 +54,14 @@ public class Whale extends Rectangle {
         for (int i = 0; i < 2; i++){ // loop through columns
             swimFramesRight[index++] = tmp[0][i]; // always one row
         }
-        this.swimAnimationRight = new Animation(0.5f, swimFramesRight);
+        this.swimAnimationRight = new Animation(0.2f, swimFramesRight);
 
         TextureRegion[][] tmp2 = TextureRegion.split(swimSheetLeft, swimSheetLeft.getWidth()/2, swimSheetLeft.getHeight());
         int jndex = 0;
         for (int i = 0; i < 2; i++){ // loop through columns
             swimFramesLeft[jndex++] = tmp2[0][i]; // always one row
         }
-        this.swimAnimationLeft = new Animation(0.5f, swimFramesLeft);
+        this.swimAnimationLeft = new Animation(0.2f, swimFramesLeft);
         // Set direction
         this.direction = 0;
         // Should automatically determine starting size/position

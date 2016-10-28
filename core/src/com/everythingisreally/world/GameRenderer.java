@@ -90,8 +90,11 @@ public class GameRenderer {
             Animation animation = gameWorld.getWhale().render();
             stateTime += Gdx.graphics.getDeltaTime();
             currentWhaleFrame = animation.getKeyFrame(stateTime, true);
-
-
+            //if (gameWorld.getWhale().getDirection() == 0 ) {
+            //currentWhaleFrame.flip(true, false);
+            //}
+            //currentWhaleFrame.flip(true, true);
+            //currentWhaleFrame.set
             batch.draw( currentWhaleFrame,// gameWorld.getWhale().getWhaleImage()
                     gameWorld.getWhale().x, gameWorld.getWhale().y);
         }
