@@ -29,14 +29,18 @@ public class Whale extends Rectangle {
     private Texture whale_2 = new Texture(Gdx.files.internal("star_whale_20.png"));
     private Texture whale_3 = new Texture(Gdx.files.internal("star_whale_40.png"));
     private Texture whale_4 = new Texture(Gdx.files.internal("star_whale_70.png"));
-    private Texture whale_left = new Texture(Gdx.files.internal("starwhale_right.png"));
-    private Texture whale_right = new Texture(Gdx.files.internal("starwhale_left.png"));
+    // TODO: Are these the right directions?
+    private Texture whale_right = new Texture(Gdx.files.internal("starwhale_right.png"));
+    private Texture whale_left = new Texture(Gdx.files.internal("starwhale_left.png"));
     // TODO:
-    // Make For Right and Left
-    private Texture swimSheet = new Texture(Gdx.files.internal("starwhale_sprite_animation.png"));
-    private TextureRegion[] swimFrames = new TextureRegion[2 *1 ];
-    private Animation swimAnimation;
-
+    // Make Animation Tail For Right and Left
+    private Texture swimSheetRight = new Texture(Gdx.files.internal("sw_right_spritesheet.png"));
+    private TextureRegion[] swimFramesRight = new TextureRegion[2 *1 ];
+    private Animation swimAnimationRight;
+    // LEFT animation
+    private Texture swimSheetLeft = new Texture(Gdx.files.internal("sw_left_spritesheet.png"));
+    private TextureRegion[] swimFramesLeft = new TextureRegion[2 *1 ];
+    private Animation swimAnimationLeft;
 
     private double whale_w_2 = 32 * 1.2;
     private double whale_w_3 = 32 * 1.4;
@@ -44,12 +48,20 @@ public class Whale extends Rectangle {
 
     public Whale(float x, float y, float width, float height) { // Constructor!!!!
         super(x, y, width, height);
-        TextureRegion[][] tmp = TextureRegion.split(swimSheet, swimSheet.getWidth()/2, swimSheet.getHeight());
+        TextureRegion[][] tmp = TextureRegion.split(swimSheetRight, swimSheetRight.getWidth()/2, swimSheetRight.getHeight());
         int index = 0;
         for (int i = 0; i < 2; i++){ // loop through columns
-            swimFrames[index++] = tmp[0][i]; // always one row
+            swimFramesRight[index++] = tmp[0][i]; // always one row
         }
-        this.swimAnimation = new Animation(0.5f, swimFrames);
+        this.swimAnimationRight = new Animation(0.5f, swimFramesRight);
+
+        TextureRegion[][] tmp2 = TextureRegion.split(swimSheetLeft, swimSheetLeft.getWidth()/2, swimSheetLeft.getHeight());
+        int jndex = 0;
+        for (int i = 0; i < 2; i++){ // loop through columns
+            swimFramesLeft[jndex++] = tmp2[0][i]; // always one row
+        }
+        this.swimAnimationLeft = new Animation(0.5f, swimFramesLeft);
+        // Set direction
         this.direction = 0;
         // Should automatically determine starting size/position
     }
@@ -73,11 +85,16 @@ public class Whale extends Rectangle {
     public void perish(){ // die of hunger make rectangle non-existant
         this.setWidth(0);
         this.setHeight(0);
+
     }
 
     public Animation render() {
         // should I pass back rather the animation?
-        return this.swimAnimation;
+        if (direction == 0) {
+            return this.swimAnimationRight;
+        } else {
+            return this.swimAnimationLeft;
+        }
     }
     // TODO: BE SMARTER!
     public void refreshWhale(){

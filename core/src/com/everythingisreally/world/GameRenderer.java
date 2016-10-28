@@ -87,12 +87,12 @@ public class GameRenderer {
             gameWorld.getWhale().perish();
         } else if (gameWorld.isAlive()) {
             // Whale is alive
-            //Animation animation = gameWorld.getWhale().render();
-            //stateTime += Gdx.graphics.getDeltaTime();
-            //currentWhaleFrame = animation.getKeyFrame(stateTime, true);
+            Animation animation = gameWorld.getWhale().render();
+            stateTime += Gdx.graphics.getDeltaTime();
+            currentWhaleFrame = animation.getKeyFrame(stateTime, true);
 
 
-            batch.draw( gameWorld.getWhale().getWhaleImage(),//currentWhaleFrame,// gameWorld.getWhale().getWhaleImage(),
+            batch.draw( currentWhaleFrame,// gameWorld.getWhale().getWhaleImage()
                     gameWorld.getWhale().x, gameWorld.getWhale().y);
         }
 
