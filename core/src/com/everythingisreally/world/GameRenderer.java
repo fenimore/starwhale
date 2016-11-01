@@ -143,15 +143,6 @@ public class GameRenderer {
         shapeRenderer.rect(20, 1075, gameWorld.getWhale().getHealth() * 3, 20); // max health is 300 px
         shapeRenderer.end();
 
-        //shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-        //shapeRenderer.setColor(Color.SALMON);
-        // Draw Explosions!!!
-        //for(Circle explosion: gameWorld.getExplosions()) {
-        //    //shapeRenderer.
-        //    shapeRenderer.circle(explosion.x, explosion.y, explosion.radius);
-        //}
-        //shapeRenderer.end();
-
         //Update Variables which populate Score and Health Bitmap
         //whaleHealth = "Health " + gameWorld.getWhale().getHealth();
         starScore = String.valueOf(gameWorld.getWhale().getScore());

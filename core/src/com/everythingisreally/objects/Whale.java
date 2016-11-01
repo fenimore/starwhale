@@ -36,11 +36,15 @@ public class Whale extends Rectangle {
     private int direction = 0; // 0 is right
     private Animation swimAnimationRight;
     private Animation swimAnimationLeft;
-    private Animation swimAnimationRight20; // 20 percent increase
-    private Animation swimAnimationLeft20; // 20 percent increase
+    private Animation swimAnimationRight20; // 120 percent increase
+    private Animation swimAnimationLeft20; // 120 percent increase
+    private Animation swimAnimationRight40;
+    private Animation swimAnimationLeft40;
+    private Animation swimAnimationRight70;
+    private Animation swimAnimationLeft70;
     private double whale_width_2 = 32 * 1.2;
-    private double whale_w_3 = 32 * 1.4;
-    private double whale_w_4 = 32 * 1.7;
+    private double whale_width_3 = 32 * 1.4;
+    private double whale_width_4 = 32 * 1.7;
 
     public Whale(float x, float y, float width, float height) { // Constructor!!!!
         super(x, y, width, height);
@@ -48,47 +52,6 @@ public class Whale extends Rectangle {
         // Set direction
         this.direction = 0;
         // Should automatically determine starting size/position
-    }
-
-    public void setAnimations() {
-        /* Right Animation Sheets */
-        Texture swimSheetRight = new Texture(Gdx.files.internal("sw_left_spritesheet.png"));
-        TextureRegion[][] tmp = TextureRegion.split(swimSheetRight, swimSheetRight.getWidth()/2, swimSheetRight.getHeight());
-        int index = 0;
-        TextureRegion[] swimFramesRight = new TextureRegion[2];
-        for (int i = 0; i < 2; i++){ // loop through columns
-            swimFramesRight[index++] = tmp[0][i]; // always one row
-        }
-        this.swimAnimationRight = new Animation(0.2f, swimFramesRight);
-        // 20 percent increase
-        swimFramesRight = new TextureRegion[2];
-        swimSheetRight = new Texture(Gdx.files.internal("sw_left_spritesheet_20.png"));
-        tmp = TextureRegion.split(swimSheetRight, swimSheetRight.getWidth()/2, swimSheetRight.getHeight());
-        index = 0;
-        for (int i = 0; i < 2; i++){ // loop through columns
-            swimFramesRight[index++] = tmp[0][i]; // always one row
-        }
-        this.swimAnimationRight20 = new Animation(0.2f, swimFramesRight);
-
-
-        /* Left Animation Sheets */
-        Texture swimSheetLeft = new Texture(Gdx.files.internal("sw_right_spritesheet.png"));
-        TextureRegion[][] tmp2 = TextureRegion.split(swimSheetLeft, swimSheetLeft.getWidth()/2, swimSheetLeft.getHeight());
-        index = 0;
-        TextureRegion[] swimFramesLeft = new TextureRegion[2]; // Col times rows
-        for (int i = 0; i < 2; i++){ // loop through columns
-            swimFramesLeft[index++] = tmp2[0][i]; // always one row
-        }
-        this.swimAnimationLeft = new Animation(0.2f, swimFramesLeft);
-        // 20 Percent
-        swimFramesLeft = new TextureRegion[2]; // Col times rows
-        swimSheetLeft = new Texture(Gdx.files.internal("sw_right_spritesheet_20.png"));
-        tmp2 = TextureRegion.split(swimSheetLeft, swimSheetLeft.getWidth()/2, swimSheetLeft.getHeight());
-        index = 0;
-        for (int i = 0; i < 2; i++){ // loop through columns
-            swimFramesLeft[index++] = tmp2[0][i]; // always one row
-        }
-        this.swimAnimationLeft20 = new Animation(0.2f, swimFramesLeft);
     }
 
 
@@ -209,5 +172,82 @@ public class Whale extends Rectangle {
 
     public void setVelocity(int velocity) {
         Velocity = velocity;
+    }
+
+
+    public void setAnimations() {
+        /* Right Animation Sheets */
+        Texture swimSheetRight = new Texture(Gdx.files.internal("sw_left_spritesheet.png"));
+        TextureRegion[][] tmp = TextureRegion.split(swimSheetRight, swimSheetRight.getWidth()/2, swimSheetRight.getHeight());
+        int index = 0;
+        TextureRegion[] swimFramesRight = new TextureRegion[2];
+        for (int i = 0; i < 2; i++){ // loop through columns
+            swimFramesRight[index++] = tmp[0][i]; // always one row
+        }
+        this.swimAnimationRight = new Animation(0.2f, swimFramesRight);
+        // 20 percent increase
+        swimFramesRight = new TextureRegion[2];
+        swimSheetRight = new Texture(Gdx.files.internal("sw_left_spritesheet_20.png"));
+        tmp = TextureRegion.split(swimSheetRight, swimSheetRight.getWidth()/2, swimSheetRight.getHeight());
+        index = 0;
+        for (int i = 0; i < 2; i++){ // loop through columns
+            swimFramesRight[index++] = tmp[0][i]; // always one row
+        }
+        this.swimAnimationRight20 = new Animation(0.2f, swimFramesRight);
+        // 40 percent increase
+        swimFramesRight = new TextureRegion[2];
+        swimSheetRight = new Texture(Gdx.files.internal("sw_left_spritesheet_40.png"));
+        tmp = TextureRegion.split(swimSheetRight, swimSheetRight.getWidth()/2, swimSheetRight.getHeight());
+        index = 0;
+        for (int i = 0; i < 2; i++){ // loop through columns
+            swimFramesRight[index++] = tmp[0][i]; // always one row
+        }
+        this.swimAnimationRight40 = new Animation(0.2f, swimFramesRight);
+        // 70 percent increase
+        swimFramesRight = new TextureRegion[2];
+        swimSheetRight = new Texture(Gdx.files.internal("sw_left_spritesheet_70.png"));
+        tmp = TextureRegion.split(swimSheetRight, swimSheetRight.getWidth()/2, swimSheetRight.getHeight());
+        index = 0;
+        for (int i = 0; i < 2; i++){ // loop through columns
+            swimFramesRight[index++] = tmp[0][i]; // always one row
+        }
+        this.swimAnimationRight70 = new Animation(0.2f, swimFramesRight);
+
+        /* Left Animation Sheets */
+        Texture swimSheetLeft = new Texture(Gdx.files.internal("sw_right_spritesheet.png"));
+        tmp = TextureRegion.split(swimSheetLeft, swimSheetLeft.getWidth()/2, swimSheetLeft.getHeight());
+        index = 0;
+        TextureRegion[] swimFramesLeft = new TextureRegion[2]; // Col times rows
+        for (int i = 0; i < 2; i++){ // loop through columns
+            swimFramesLeft[index++] = tmp[0][i]; // always one row
+        }
+        this.swimAnimationLeft = new Animation(0.2f, swimFramesLeft);
+        // 20 Percent
+        swimFramesLeft = new TextureRegion[2]; // Col times rows
+        swimSheetLeft = new Texture(Gdx.files.internal("sw_right_spritesheet_20.png"));
+        tmp = TextureRegion.split(swimSheetLeft, swimSheetLeft.getWidth()/2, swimSheetLeft.getHeight());
+        index = 0;
+        for (int i = 0; i < 2; i++){ // loop through columns
+            swimFramesLeft[index++] = tmp[0][i]; // always one row
+        }
+        this.swimAnimationLeft20 = new Animation(0.2f, swimFramesLeft);
+        // 40 Percent
+        swimFramesLeft = new TextureRegion[2]; // Col times rows
+        swimSheetLeft = new Texture(Gdx.files.internal("sw_right_spritesheet_40.png"));
+        tmp = TextureRegion.split(swimSheetLeft, swimSheetLeft.getWidth()/2, swimSheetLeft.getHeight());
+        index = 0;
+        for (int i = 0; i < 2; i++){ // loop through columns
+            swimFramesLeft[index++] = tmp[0][i]; // always one row
+        }
+        this.swimAnimationLeft40 = new Animation(0.2f, swimFramesLeft);
+        // 70 Percent
+        swimFramesLeft = new TextureRegion[2]; // Col times rows
+        swimSheetLeft = new Texture(Gdx.files.internal("sw_right_spritesheet_70.png"));
+        tmp = TextureRegion.split(swimSheetLeft, swimSheetLeft.getWidth()/2, swimSheetLeft.getHeight());
+        index = 0;
+        for (int i = 0; i < 2; i++){ // loop through columns
+            swimFramesLeft[index++] = tmp[0][i]; // always one row
+        }
+        this.swimAnimationLeft70 = new Animation(0.2f, swimFramesLeft);
     }
 }
