@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 
@@ -23,10 +24,12 @@ public class MainMenuScreen implements Screen {
 
     OrthographicCamera camera;
 
-    private Texture whaleImage;
-    private Texture galaxyImage;
-    private Texture blackholeImage;
+    static private Texture whaleImage;
+    static private Texture galaxyImage;
+    static private Texture blackholeImage;
     private Galaxy galaxy;
+    private Sprite backSprite;
+    static private Texture backgroundImage;
     // Whale Placement
     ///private int RIGHT = 0;
     //private int LEFT = 1;
@@ -48,8 +51,12 @@ public class MainMenuScreen implements Screen {
         whaleImage = new Texture(Gdx.files.internal("starwhale_right.png"));
         galaxyImage = new Texture(Gdx.files.internal("galaxy.png"));
         blackholeImage = new Texture(Gdx.files.internal("black_hole.png"));
+        backgroundImage = new Texture(Gdx.files.internal("background.png"));
 
         galaxy = new Galaxy(600, 900, 150, galaxyImage);
+
+        backSprite = new Sprite(backgroundImage);
+        backSprite.setSize(800,1150);
     }
 
     @Override
@@ -79,6 +86,8 @@ public class MainMenuScreen implements Screen {
 
         // Load a TTF oh lord
         game.batch.begin();
+
+        backSprite.draw(game.batch);
 
         font30.draw(game.batch, "  Lorem ipsum dolor sit amet, consectetur  \n" +
                 "elit. Aenean nunc metus, iaculis quis blandit. \n" +
