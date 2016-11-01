@@ -85,6 +85,18 @@ public class Whale extends Rectangle {
             } else {
                 return this.swimAnimationLeft20;
             }
+        } else if(Score >= 50 && Score < 100) {
+            if (direction == 0) {
+                return this.swimAnimationRight40;
+            } else {
+                return this.swimAnimationLeft40;
+            }
+        } else if(Score >= 100) { //&& Score < 200) {
+            if (direction == 0) {
+                return this.swimAnimationRight70;
+            } else {
+                return this.swimAnimationLeft70;
+            }
         }
         if (direction == 0) {
             return this.swimAnimationRight;
@@ -95,22 +107,18 @@ public class Whale extends Rectangle {
     // TODO: BE SMARTER!
     public void refreshWhale(){
         // Log.d("Velocity of Screen/whale", Integer.toString(this.Velocity));
-        System.out.println(Integer.toString(this.Velocity) + "Log Velocity");
+        //System.out.println(Integer.toString(this.Velocity) + "Log Velocity");
         if(Score < 50) {
-            //setWhaleImage(whale_1);
-            this.Velocity = levelOne;
+            // Do nothing
         } else if(Score >= 50 && Score < 100) {
-            //setWhaleImage(whale_2);
-            //this.setWidth(((float) whale_w_2));
-            this.Velocity = levelTwo;
+            this.setWidth(((float) whale_width_2));
+            this.Velocity = levelOne;
         } else if(Score >= 100 && Score < 200) {
-            this.Velocity = levelThree;
-            //setWhaleImage(whale_3);
-            //this.setWidth(((float) whale_w_3));
+            this.Velocity = levelTwo;
+            this.setWidth(((float) whale_width_3));
         } else if(Score >= 200) {
-            this.Velocity = levelFour;
-            //setWhaleImage(whale_4);
-            //this.setWidth(((float) whale_w_4));
+            this.Velocity = levelThree;
+            this.setWidth(((float) whale_width_4));
             // Let Drain be a bit higher
             this.Drain = 0.29;
         }

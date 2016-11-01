@@ -155,8 +155,8 @@ public class GameWorld {
 
         // Whale Movement
         if(!openingPause){
-            if(whaleDirection == RIGHT) whale.x -= 250 * Gdx.graphics.getDeltaTime();
-            if(whaleDirection == LEFT) whale.x += 250 * Gdx.graphics.getDeltaTime();
+            if(whaleDirection == RIGHT) whale.x -= whale.getVelocity() * Gdx.graphics.getDeltaTime();
+            if(whaleDirection == LEFT) whale.x += whale.getVelocity() * Gdx.graphics.getDeltaTime();
         }
 
         // Whale and Screen Limits
