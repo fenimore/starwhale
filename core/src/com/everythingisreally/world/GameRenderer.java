@@ -55,6 +55,9 @@ public class GameRenderer {
         whaleHealth = "Health: 100";
         healthBitmap = new BitmapFont();
 
+        // Health Bar
+        shapeRenderer = new ShapeRenderer();
+
         //https://github.com/libgdx/libgdx/wiki/Gdx-freetype
         generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/Inconsolata.otf"));
         parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
@@ -75,7 +78,7 @@ public class GameRenderer {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.setProjectionMatrix(camera.combined);
 
-        shapeRenderer = new ShapeRenderer();
+
         //shapeRenderer.set(ShapeRenderer.ShapeType.Filled);
 
         batch.begin();
@@ -154,7 +157,7 @@ public class GameRenderer {
         //shapeRenderer.end();
 
         //Update Variables which populate Score and Health Bitmap
-        whaleHealth = "Health " + gameWorld.getWhale().getHealth();
+        //whaleHealth = "Health " + gameWorld.getWhale().getHealth();
         starScore = String.valueOf(gameWorld.getWhale().getScore());
     }
 

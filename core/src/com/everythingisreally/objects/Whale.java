@@ -8,6 +8,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 
+import sun.rmi.runtime.Log;
+
 /**
  * Created by fen on 2/24/16.
  */
@@ -19,20 +21,21 @@ public class Whale extends Rectangle {
     // Health and Score
     private double Health = 100;
     private int Score = 0;
-    private double Drain = 0.0;//0.2;
+    private double Drain = 0.2;//0.0;//0.2;
+    private int Velocity = 250;
 
-    private int RIGHT = 0;
-    private int LEFT = 1;
+    //private final int RIGHT = 0;
+    //private final int LEFT = 1;
     private int direction = 0;
     // each Whale Image is incremented from the original, either
     // 20% increase, 40, 70, etcs
-    private Texture whale_1 = new Texture(Gdx.files.internal("starwhale_right.png"));
-    private Texture whale_2 = new Texture(Gdx.files.internal("star_whale_20.png"));
-    private Texture whale_3 = new Texture(Gdx.files.internal("star_whale_40.png"));
-    private Texture whale_4 = new Texture(Gdx.files.internal("star_whale_70.png"));
+    //private Texture whale_1 = new Texture(Gdx.files.internal("starwhale_right.png"));
+    //nprivate Texture whale_2 = new Texture(Gdx.files.internal("star_whale_20.png"));
+    //private Texture whale_3 = new Texture(Gdx.files.internal("star_whale_40.png"));
+    //private Texture whale_4 = new Texture(Gdx.files.internal("star_whale_70.png"));
     // TODO: Are these the right directions?
-    private Texture whale_right = new Texture(Gdx.files.internal("starwhale_right.png"));
-    private Texture whale_left = new Texture(Gdx.files.internal("starwhale_left.png"));
+    //private Texture whale_right = new Texture(Gdx.files.internal("starwhale_right.png"));
+    //private Texture whale_left = new Texture(Gdx.files.internal("starwhale_left.png"));
     // TODO:
     // Make Animation Tail For Right and Left
     private Texture swimSheetRight = new Texture(Gdx.files.internal("sw_left_spritesheet.png"));
@@ -99,28 +102,30 @@ public class Whale extends Rectangle {
     }
     // TODO: BE SMARTER!
     public void refreshWhale(){
+        //Log.d("Velocity of Screen/whale", Integer.toString(this.Velocity));
         if (direction == 0) {
-            setWhaleImage(whale_right);
+            //setWhaleImage(whale_right);
         } else {
-            setWhaleImage(whale_left);
+            //setWhaleImage(whale_left);
         }
 
         if(Score < 50) {
             //setWhaleImage(whale_1);
+            this.Velocity = 300;
         }
         if(Score >= 50 && Score < 100) {
             //setWhaleImage(whale_2);
-            this.setWidth(((float) whale_w_2));
+            //this.setWidth(((float) whale_w_2));
         }
         if(Score >= 100 && Score < 200) {
             //setWhaleImage(whale_3);
-            this.setWidth(((float) whale_w_3));
+            //this.setWidth(((float) whale_w_3));
         }
         if(Score >= 200) {
             //setWhaleImage(whale_4);
-            this.setWidth(((float) whale_w_4));
+            //this.setWidth(((float) whale_w_4));
             // Let Drain be a bit higher
-            //this.Drain = 0.29;
+            this.Drain = 0.29;
         }
         // RIGHT now, 200 is the top level...
     }
@@ -168,5 +173,17 @@ public class Whale extends Rectangle {
 
     public int getDirection() {
         return direction;
+    }
+
+    public int getVelocity() {
+        return Velocity;
+    }
+
+    public void modifyVelocity(int amount) {
+        this.Velocity += amount;
+    }
+
+    public void setVelocity(int velocity) {
+        Velocity = velocity;
     }
 }

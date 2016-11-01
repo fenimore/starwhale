@@ -40,7 +40,8 @@ public class GameWorld {
     private long TIMER_BIG = 1999999990; // nano seconds
     private int PROBABILITY = 100;      // one out of ... for big stars
 
-    private int VELOCITY = 250;
+
+    //private int VELOCITY = 250;
 
     // Overall Time played
     private long overallTime;
@@ -48,7 +49,7 @@ public class GameWorld {
     private long timeOfDeath; // Reset Game after a bity
 
     // Checking Booleans
-    private boolean alive;
+    private boolean alive = true;
     private boolean openingPause; // This is a peculiar check
 
 
@@ -65,7 +66,7 @@ public class GameWorld {
         firstTime = TimeUtils.millis(); // Game Starts
 
         openingPause = true; // We pause movement for one second
-        alive = true; // Whale is alive
+
 
         whale.drainHealth(); // Immediately start draining
         lastDrainTime = TimeUtils.nanoTime(); // start the timer till next drain
@@ -74,14 +75,12 @@ public class GameWorld {
         bigStars = new Array<BigStar>(); // The arrays of game objects
         smallStars = new Array<SmallStar>(); // Deal with them as arrays
 
-        //explosions = new Array<Circle>();
-
         //https://truongtx.me/2013/04/27/simple-swipe-gesture-detection-for-libgdx
         Gdx.input.setInputProcessor(new SimpleDirectionGestureDetector(new SimpleDirectionGestureDetector.DirectionListener() {
             @Override
             public void onUp() {
                 // TODO Auto-generated method stub
-                VELOCITY += 20;
+                getWhale().modifyVelocity(20);
             }
 
             @Override
@@ -99,7 +98,7 @@ public class GameWorld {
             @Override
             public void onDown() {
                 // TODO Auto-generated method stub
-                VELOCITY -= 20;
+                getWhale().modifyVelocity(-20);
             }
         }));
     }
@@ -217,7 +216,7 @@ public class GameWorld {
         Iterator<SmallStar> starIter = stars.iterator();
         while(starIter.hasNext()){
             SmallStar star = starIter.next();
-            star.y -= VELOCITY * Gdx.graphics.getDeltaTime(); // VELOCITY is 250
+            star.y -= getWhale().getVelocity() * Gdx.graphics.getDeltaTime(); // VELOCITY is 250
             if(star.y + star.getHeight() < 0) starIter.remove();
             if(star.overlaps(whale) && alive) { // is it necessary to keep alive boolean?
                 // play sound
@@ -234,7 +233,7 @@ public class GameWorld {
         Iterator<BigStar> starIter = stars.iterator();
         while(starIter.hasNext()){
             BigStar star = starIter.next();
-            star.y -= VELOCITY * Gdx.graphics.getDeltaTime();
+            star.y -= getWhale().getVelocity() * Gdx.graphics.getDeltaTime();
             if(star.y + star.getHeight() < 0) starIter.remove();
             if(star.overlaps(whale) && alive) { // is it necessary to keep alive boolean?
                 // play sound
@@ -278,6 +277,7 @@ public class GameWorld {
     public Whale getWhale(){
         return whale;
     }
+
 
     public Array<SmallStar> getSmallStars() {
         return smallStars;
