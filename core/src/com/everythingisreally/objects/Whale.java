@@ -19,7 +19,7 @@ public class Whale extends Rectangle {
     // Health and Score
     private double Health = 100;
     private int Score = 0;
-    private double Drain = 0.2;
+    private double Drain = 0.0;//0.2;
 
     private int RIGHT = 0;
     private int LEFT = 1;
@@ -120,7 +120,7 @@ public class Whale extends Rectangle {
             //setWhaleImage(whale_4);
             this.setWidth(((float) whale_w_4));
             // Let Drain be a bit higher
-            this.Drain = 0.29;
+            //this.Drain = 0.29;
         }
         // RIGHT now, 200 is the top level...
     }

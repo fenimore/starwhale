@@ -10,6 +10,7 @@ import com.badlogic.gdx.math.Rectangle;
 public class Star extends Rectangle { // Circles have no collision system build in
     // Looks like a whale, no?
     private Texture starImage;
+
     // How much it heals
     private double Nutrients;
 

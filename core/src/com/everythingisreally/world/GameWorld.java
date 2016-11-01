@@ -70,6 +70,7 @@ public class GameWorld {
         whale.drainHealth(); // Immediately start draining
         lastDrainTime = TimeUtils.nanoTime(); // start the timer till next drain
 
+        // FIXME
         bigStars = new Array<BigStar>(); // The arrays of game objects
         smallStars = new Array<SmallStar>(); // Deal with them as arrays
 
@@ -164,6 +165,7 @@ public class GameWorld {
         if(whale.x > 800 - 32) whale.x = 800 - 32; //32??
 
         // Generate Stars at Interval TODO: Find sweet Spot
+        // FIXME change to buffer
         if(TimeUtils.nanoTime() - lastStarTime > 99919990) spawnSmallStar();
         if(TimeUtils.nanoTime() - lastBigStarTime > 1999999990){
             // flip a coin
