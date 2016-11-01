@@ -45,7 +45,7 @@ public class MainMenuScreen implements Screen {
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 800, 1150);
 
-        whaleImage = new Texture(Gdx.files.internal("star_whale.png"));
+        whaleImage = new Texture(Gdx.files.internal("starwhale_right.png"));
         galaxyImage = new Texture(Gdx.files.internal("galaxy.png"));
         blackholeImage = new Texture(Gdx.files.internal("black_hole.png"));
 

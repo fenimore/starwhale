@@ -10,65 +10,87 @@ import com.badlogic.gdx.math.Rectangle;
 
 import sun.rmi.runtime.Log;
 
+
 /**
  * Created by fen on 2/24/16.
  */
+
+
+
 public class Whale extends Rectangle {
 
     // Looks like a whale, no?
-    private Texture whaleImage;
+    static private Texture whaleImage;
 
     // Health and Score
     private double Health = 100;
     private int Score = 0;
     private double Drain = 0.2;//0.0;//0.2;
     private int Velocity = 250;
+    final private int levelOne = 270;
+    final private int levelTwo = 300;
+    final private int levelThree = 340;
+    final private int levelFour = 400;
 
-    //private final int RIGHT = 0;
-    //private final int LEFT = 1;
-    private int direction = 0;
-    // each Whale Image is incremented from the original, either
-    // 20% increase, 40, 70, etcs
-    //private Texture whale_1 = new Texture(Gdx.files.internal("starwhale_right.png"));
-    //nprivate Texture whale_2 = new Texture(Gdx.files.internal("star_whale_20.png"));
-    //private Texture whale_3 = new Texture(Gdx.files.internal("star_whale_40.png"));
-    //private Texture whale_4 = new Texture(Gdx.files.internal("star_whale_70.png"));
-    // TODO: Are these the right directions?
-    //private Texture whale_right = new Texture(Gdx.files.internal("starwhale_right.png"));
-    //private Texture whale_left = new Texture(Gdx.files.internal("starwhale_left.png"));
-    // TODO:
-    // Make Animation Tail For Right and Left
-    private Texture swimSheetRight = new Texture(Gdx.files.internal("sw_left_spritesheet.png"));
-    private TextureRegion[] swimFramesRight = new TextureRegion[2 *1 ];
+
+    private int direction = 0; // 0 is right
     private Animation swimAnimationRight;
-    // LEFT animation
-    private Texture swimSheetLeft = new Texture(Gdx.files.internal("sw_right_spritesheet.png")); // Broke
-    private TextureRegion[] swimFramesLeft = new TextureRegion[2 *1 ];
     private Animation swimAnimationLeft;
-
-    private double whale_w_2 = 32 * 1.2;
+    private Animation swimAnimationRight20; // 20 percent increase
+    private Animation swimAnimationLeft20; // 20 percent increase
+    private double whale_width_2 = 32 * 1.2;
     private double whale_w_3 = 32 * 1.4;
     private double whale_w_4 = 32 * 1.7;
 
     public Whale(float x, float y, float width, float height) { // Constructor!!!!
         super(x, y, width, height);
-        TextureRegion[][] tmp = TextureRegion.split(swimSheetRight, swimSheetRight.getWidth()/2, swimSheetRight.getHeight());
-        int index = 0;
-        for (int i = 0; i < 2; i++){ // loop through columns
-            swimFramesRight[index++] = tmp[0][i]; // always one row
-        }
-        this.swimAnimationRight = new Animation(0.2f, swimFramesRight);
-
-        TextureRegion[][] tmp2 = TextureRegion.split(swimSheetLeft, swimSheetLeft.getWidth()/2, swimSheetLeft.getHeight());
-        int jndex = 0;
-        for (int i = 0; i < 2; i++){ // loop through columns
-            swimFramesLeft[jndex++] = tmp2[0][i]; // always one row
-        }
-        this.swimAnimationLeft = new Animation(0.2f, swimFramesLeft);
+        this.setAnimations();
         // Set direction
         this.direction = 0;
         // Should automatically determine starting size/position
     }
+
+    public void setAnimations() {
+        /* Right Animation Sheets */
+        Texture swimSheetRight = new Texture(Gdx.files.internal("sw_left_spritesheet.png"));
+        TextureRegion[][] tmp = TextureRegion.split(swimSheetRight, swimSheetRight.getWidth()/2, swimSheetRight.getHeight());
+        int index = 0;
+        TextureRegion[] swimFramesRight = new TextureRegion[2];
+        for (int i = 0; i < 2; i++){ // loop through columns
+            swimFramesRight[index++] = tmp[0][i]; // always one row
+        }
+        this.swimAnimationRight = new Animation(0.2f, swimFramesRight);
+        // 20 percent increase
+        swimFramesRight = new TextureRegion[2];
+        swimSheetRight = new Texture(Gdx.files.internal("sw_left_spritesheet_20.png"));
+        tmp = TextureRegion.split(swimSheetRight, swimSheetRight.getWidth()/2, swimSheetRight.getHeight());
+        index = 0;
+        for (int i = 0; i < 2; i++){ // loop through columns
+            swimFramesRight[index++] = tmp[0][i]; // always one row
+        }
+        this.swimAnimationRight20 = new Animation(0.2f, swimFramesRight);
+
+
+        /* Left Animation Sheets */
+        Texture swimSheetLeft = new Texture(Gdx.files.internal("sw_right_spritesheet.png"));
+        TextureRegion[][] tmp2 = TextureRegion.split(swimSheetLeft, swimSheetLeft.getWidth()/2, swimSheetLeft.getHeight());
+        index = 0;
+        TextureRegion[] swimFramesLeft = new TextureRegion[2]; // Col times rows
+        for (int i = 0; i < 2; i++){ // loop through columns
+            swimFramesLeft[index++] = tmp2[0][i]; // always one row
+        }
+        this.swimAnimationLeft = new Animation(0.2f, swimFramesLeft);
+        // 20 Percent
+        swimFramesLeft = new TextureRegion[2]; // Col times rows
+        swimSheetLeft = new Texture(Gdx.files.internal("sw_right_spritesheet_20.png"));
+        tmp2 = TextureRegion.split(swimSheetLeft, swimSheetLeft.getWidth()/2, swimSheetLeft.getHeight());
+        index = 0;
+        for (int i = 0; i < 2; i++){ // loop through columns
+            swimFramesLeft[index++] = tmp2[0][i]; // always one row
+        }
+        this.swimAnimationLeft20 = new Animation(0.2f, swimFramesLeft);
+    }
+
 
     public void addHealth(double x){ // Heal by Stars
         if(Health + (1* x) <= 100){ // why by multiples of one? What?
@@ -83,7 +105,7 @@ public class Whale extends Rectangle {
     }
 
     public void addScore(int x) { // Add score
-        Score += 1 * x; // why is it a multiplier by one? What was I thinking?
+        Score += x; // why is it a multiplier by one? What was I thinking?
     }
 
     public void perish(){ // die of hunger make rectangle non-existant
@@ -94,6 +116,13 @@ public class Whale extends Rectangle {
 
     public Animation render() {
         // should I pass back rather the animation?
+        if(Score >= 50 && Score < 100) {
+            if (direction == 0) {
+                return this.swimAnimationRight20;
+            } else {
+                return this.swimAnimationLeft20;
+            }
+        }
         if (direction == 0) {
             return this.swimAnimationRight;
         } else {
@@ -102,26 +131,21 @@ public class Whale extends Rectangle {
     }
     // TODO: BE SMARTER!
     public void refreshWhale(){
-        //Log.d("Velocity of Screen/whale", Integer.toString(this.Velocity));
-        if (direction == 0) {
-            //setWhaleImage(whale_right);
-        } else {
-            //setWhaleImage(whale_left);
-        }
-
+        // Log.d("Velocity of Screen/whale", Integer.toString(this.Velocity));
+        System.out.println(Integer.toString(this.Velocity) + "Log Velocity");
         if(Score < 50) {
             //setWhaleImage(whale_1);
-            this.Velocity = 300;
-        }
-        if(Score >= 50 && Score < 100) {
+            this.Velocity = levelOne;
+        } else if(Score >= 50 && Score < 100) {
             //setWhaleImage(whale_2);
             //this.setWidth(((float) whale_w_2));
-        }
-        if(Score >= 100 && Score < 200) {
+            this.Velocity = levelTwo;
+        } else if(Score >= 100 && Score < 200) {
+            this.Velocity = levelThree;
             //setWhaleImage(whale_3);
             //this.setWidth(((float) whale_w_3));
-        }
-        if(Score >= 200) {
+        } else if(Score >= 200) {
+            this.Velocity = levelFour;
             //setWhaleImage(whale_4);
             //this.setWidth(((float) whale_w_4));
             // Let Drain be a bit higher

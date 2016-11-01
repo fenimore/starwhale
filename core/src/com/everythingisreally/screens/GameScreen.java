@@ -86,7 +86,7 @@ public class GameScreen implements Screen {
     public void dispose() {
         // TODO: Read about disposal
         // dispose of all the native resources
-        world.getWhale().getWhaleImage().dispose();
+        //world.getWhale().getWhaleImage().dispose();
         for (BigStar bigStar: world.getBigStars()){
             bigStar.getStarImage().dispose();
         }

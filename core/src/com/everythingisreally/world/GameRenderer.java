@@ -84,7 +84,7 @@ public class GameRenderer {
         batch.begin();
         // Check Whale Status and Draw Whale
         if (!gameWorld.isAlive()){
-            gameWorld.getWhale().getWhaleImage().dispose(); // access whale through GameWorld Class
+            //gameWorld.getWhale().getWhaleImage().dispose(); // access whale through GameWorld Class
             scoreBitmap.draw(batch, "Game Over, Click to Restart", 85, 400);
             font100.draw(batch, "Famished", 100, 500);
             gameWorld.getWhale().perish();
@@ -93,11 +93,7 @@ public class GameRenderer {
             Animation animation = gameWorld.getWhale().render();
             stateTime += Gdx.graphics.getDeltaTime();
             currentWhaleFrame = animation.getKeyFrame(stateTime, true);
-            //if (gameWorld.getWhale().getDirection() == 0 ) {
-            //currentWhaleFrame.flip(true, false);
-            //}
-            //currentWhaleFrame.flip(true, true);
-            //currentWhaleFrame.set
+
             batch.draw( currentWhaleFrame,// gameWorld.getWhale().getWhaleImage()
                     gameWorld.getWhale().x, gameWorld.getWhale().y);
         }

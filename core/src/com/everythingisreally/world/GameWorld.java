@@ -178,8 +178,6 @@ public class GameWorld {
         // Falling Stars, and Collision Checking
         moveSmallStars(smallStars);
         moveBigStars(bigStars);
-        //removeExplosions(explosions);
-
         bonusPoints(whale.getScore());
     }
 
